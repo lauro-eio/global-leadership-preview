@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Team Accountability Loops — Operational Habits &amp; Execution</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Operational Habits &amp; Execution</p>
+      <h1>Team Accountability Loops</h1>
+      <p class="hero-lead">Turn big team goals into daily compounding actions a frontline leader can coach, see, and sustain when they are not in the room.</p>
+      <div class="hero-meta">
+        <span>ATC · U01</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Why Tiny Improvements Beat Big Leaps: Evidence f</a>
+<a href="#opinion">The Week I Stopped Asking My Team for a Miracle</a>
+<a href="#assessment">Self-Assessment — How Do You Drive Change on You</a>
+<a href="#case-1">Case 1 — Sofia and the Monday Reset Trap</a>
+<a href="#case-2">Case 2 — Diego’s Dashboard vs. the Floor Ritual</a>
+<a href="#framework">Framework — Frontline 1% Habit Canvas</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Selling a Micro-Habit to a Skept</a>
+<a href="#roleplay-strategic">Strategic Role-Play — Protecting a Team Ritual U</a>
+<a href="#key-notes">Key Notes — Tiny Gains, Visible Systems</a>
+<a href="#commitment">Commitment — Personal Habit + Team-Visible Pract</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Why Tiny Improvements Beat Big Leaps: Evidence for Frontline Habit Systems</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Why Tiny Improvements Beat Big Leaps: Evidence for Frontline Habit Systems</h2>
+<p>Frontline supervisors are often judged on dramatic turnarounds: clear a backlog in a week, hit a stretch target, “fix the team overnight.” Behavioral science points the other way. Lasting performance gains usually come from small, repeated changes in routines—not single heroic pushes.</p>
+<h3>Compound gains, not one-off heroics</h3>
+<p>Research on skill acquisition and behavior change shows that frequent, modest practice compounds. British Cycling’s “aggregation of marginal gains” story—improving many tiny factors rather than hunting one breakthrough—became famous because the logic matches how habits form: each daily action is a vote for a future identity and capability (Clear’s popular synthesis draws on this wider literature; the underlying idea appears across sports science and organizational learning).</p>
+<p>In workplaces, the same pattern shows up when teams track leading indicators (handoff quality, first-pass yield, one coaching conversation per week) instead of only lagging KPIs. Small process fixes reduce variance before they show up as quarterly wins.</p>
+<h3>Systems beat goals alone</h3>
+<p>Goals describe a destination; systems describe what people do on Tuesday. Studies of implementation intentions (“when situation X occurs, I will do Y”) find that specifying cues and responses raises follow-through compared with goal statements alone (Gollwitzer &amp; Sheeran, 2006). For a frontline leader, that means translating “improve team reliability” into a visible weekly ritual: a five-minute start-of-shift check, a standard 1:1 agenda, or a two-minute end-of-day note on one friction point.</p>
+<h3>Environment shapes behavior</h3>
+<p>Self-control is finite. Environments that make the desired action obvious and the undesired action awkward outperform motivational speeches. Classic work on choice architecture and habit cues (including environmental design research summarized in workplace behavior literature) supports rearranging tools, messages, and defaults so the right action is the easy one.</p>
+<h3>What this means for supervisors</h3>
+<ol>
+<li>Prefer one 1% process change your team can see this week over a vague transformation mandate.</li>
+<li>Tie each change to a cue already in the shift (start of stand-up, after a ticket close, before handover).</li>
+<li>Measure leading habits (completion of the ritual), not only end-of-month scorecards.</li>
+</ol>
+<h3>Selected references</h3>
+<ul>
+<li>Gollwitzer, P. M., &amp; Sheeran, P. (2006). Implementation intentions and goal achievement: A meta-analysis. <em>Advances in Experimental Social Psychology, 38</em>, 69–119.</li>
+<li>Lally, P., et al. (2010). How are habits formed: Modelling habit formation in the real world. <em>European Journal of Social Psychology, 40</em>(6), 998–1009.</li>
+<li>Wood, W., &amp; Neal, D. T. (2007). A new look at habits and the habit–goal interface. <em>Psychological Review, 114</em>(4), 843–863.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The Week I Stopped Asking My Team for a Miracle</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The Week I Stopped Asking My Team for a Miracle</h2>
+<p>I used to run Mondays like a pep rally. New stretch goal. New “all hands on deck.” By Thursday the board looked worse, and I blamed motivation.</p>
+<p>The shift came after a 1:1 with Mateo, a strong operator I had promoted into my own old seat. He said, quietly: “Every week you change the target. We never finish the last fix.” He was right. I was addicted to big leaps because they felt like leadership. They were mostly noise.</p>
+<p>That week I tried something smaller. One improvement only: every handoff must include a two-line note—what is done, what is blocked. No speeches. No new dashboard. Just that cue at every shift change.</p>
+<p>Nothing dramatic happened on day one. On day four, two tickets that usually bounced between teams closed the same afternoon. By Friday, Mateo ran the handoff without me. The miracle I had been demanding showed up as a boring ritual.</p>
+<p>If you lead people who used to be your peers, resist the urge to prove authority with a bold reset. Prove it with a system they can repeat when you are not in the room. One percent is not timid. It is how frontline teams actually get reliable.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — How Do You Drive Change on Your Team?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Sofia and the Monday Reset Trap</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Sofia and the Monday Reset Trap</h2>
+<h3>Opening</h3>
+<p>Sofia is a newly promoted <strong>line supervisor</strong> at a mid-sized logistics hub. Last year she was a top picker on the same floor. Now she leads eight people—including two friends who still joke about “when Sofia was one of us.” On Monday mornings she feels pressure from her manager, Raul, to “turn the numbers around this week.” Her default has become a loud reset: new stretch target, new speech, same frustration by Thursday.</p>
+<h3>Context</h3>
+<p>Outbound accuracy is acceptable, but <strong>handoffs between pick and pack</strong> keep slipping. Small errors snowball into overtime. Competitors are not beating Sofia with heroics; they are boringly consistent. Raul measures Sofia on weekly throughput. He rarely asks about leading habits.</p>
+<p>Sofia tried one big leap last month: a full process redesign overnight. The team complied for two days, then drifted. Trust dropped. Mateo (a former peer) told her privately that people wait for “Sofia’s next speech” instead of owning the work.</p>
+<h3>Decision point</h3>
+<p>Raul wants another Monday reset after a bad Friday. Sofia can:</p>
+<ol>
+<li>Announce another leap and ride the adrenaline.</li>
+<li>Pick <strong>one</strong> micro-habit (e.g., two-line handoff notes at every shift change) and coach it for two weeks before changing anything else.</li>
+<li>Hybrid: keep Raul’s headline target but translate it into three tiny daily actions with visible tracking.</li>
+</ol>
+<h3>Discussion questions</h3>
+<ol>
+<li>What leadership habits is Sofia modeling—and what is the team learning to ignore?</li>
+<li>How should she talk to Raul so “1% systems” does not sound like excuse-making?</li>
+<li>Design the habit loop (cue, response, reward) for the handoff note—who owns the cue when Sofia is off-shift?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — Diego’s Dashboard vs. the Floor Ritual</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — Diego’s Dashboard vs. the Floor Ritual</h2>
+<h3>Opening</h3>
+<p>Diego coordinates a <strong>customer-support pod</strong> of six agents. Leadership installed a flashy dashboard that greets him every morning with red tiles. His instinct: clear the red with a dramatic push—overtime blitzes, public call-outs, “everyone stay until green.” First-pass resolution dipped anyway. Agents are tired and quiet in stand-up.</p>
+<h3>Context</h3>
+<p>A quieter pod next door improved steadily after their supervisor installed a <strong>two-minute “blockers board”</strong> at the start of each shift: each person names one friction and one next action. No blitz. Diego dismissed it as “too small to move KPIs.” Two months later that pod’s reopen rate fell while Diego’s blitzes bought temporary green that always faded.</p>
+<p>Diego’s manager praises green tiles, not rituals. One agent, Lena, asked to try the blockers board for a week. Diego worries looking “soft” in front of peers he used to sit beside.</p>
+<h3>Decision point</h3>
+<p>Tomorrow’s stand-up is in 12 hours. Diego can:</p>
+<ol>
+<li>Run another blitz and personally clear the reddest tickets.</li>
+<li>Pilot Lena’s blockers board for five shifts and track reopen rate as a leading measure.</li>
+<li>Keep the dashboard theater for his manager while secretly running the ritual—risking mixed signals.</li>
+</ol>
+<h3>Exhibits (simplified)</h3>
+<div class="table-wrap"><table>
+<tr><th>Week</th><th>Diego pod reopen rate</th><th>Neighbor pod reopen rate</th></tr>
+<tr><td>1</td><td>18%</td><td>17%</td></tr>
+<tr><td>2 (blitz)</td><td>14%</td><td>15%</td></tr>
+<tr><td>3</td><td>19%</td><td>12%</td></tr>
+<tr><td>4</td><td>20%</td><td>11%</td></tr>
+</table></div>
+<h3>Discussion questions</h3>
+<ol>
+<li>What does the table suggest about leaps vs. compounding routines?</li>
+<li>How can Diego protect a small ritual without hiding it from his manager?</li>
+<li>Write the identity statement his pod would earn if the blockers board stuck for 30 days.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — Frontline 1% Habit Canvas</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — Frontline 1% Habit Canvas</h2>
+<p>Use in workshop or print for the floor. Complete one canvas per habit you will coach this week.</p>
+<h3>1. Outcome (one sentence)</h3>
+<p>What should be true for the team in 30 days?</p>
+<h3>2. Identity vote</h3>
+<p>“We are the kind of team that ________.”</p>
+<h3>3. Tiny action (under 5 minutes)</h3>
+<p>What will people <strong>do</strong>, not what will they “try”?</p>
+<h3>4. Habit loop</h3>
+<div class="table-wrap"><table>
+<tr><th>Element</th><th>Your design</th></tr>
+<tr><td>Cue (already on the shift)</td><td></td></tr>
+<tr><td>Craving (why it matters in plain words)</td><td></td></tr>
+<tr><td>Response (exact behavior)</td><td></td></tr>
+<tr><td>Reward (what closes the loop)</td><td></td></tr>
+</table></div>
+<h3>5. Environment</h3>
+<p>What will you add, move, or remove so the response is easier than the old habit?</p>
+<h3>6. Visibility</h3>
+<p>Where is completion visible to the team (board / chat template / checklist)?</p>
+<h3>7. Owner when you are absent</h3>
+<p>Name + backup:</p>
+<h3>8. Friday 10-minute review</h3>
+<p>Keep / tweak / drop — and one note to your manager in leading-indicator language:</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Selling a Micro-Habit to a Skeptical Peer</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Selling a Micro-Habit to a Skeptical Peer</h2>
+<p><strong>Duration:</strong> 25–35 minutes  </p>
+<p><strong>Purpose:</strong> Practice translating a big goal into one tiny, coached habit without sliding back into leap language.</p>
+<h3>Roles</h3>
+<p><strong>Role 1 — Frontline supervisor (Habit Coach)</strong>  </p>
+<p>You want agreement on one under-5-minute ritual tied to an existing cue. You must not announce a full redesign.</p>
+<p><strong>Role 2 — Skeptical former peer</strong>  </p>
+<p>You respect hard work but believe “small stuff won’t move the number.” You push for a dramatic fix. You will yield only if the coach shows a clear loop and a fair way to judge the trial.</p>
+<h3>Conflict</h3>
+<p>Can the supervisor secure a two-week trial of one micro-habit without burning the relationship or promising miracles?</p>
+<h3>Facilitator notes</h3>
+<ul>
+<li>Round 1 (8 min): Coach proposes; skeptic resists.</li>
+<li>Round 2 (8 min): Coach redesigns cue/response using skeptic’s language.</li>
+<li>Debrief (10 min): Where did leap language creep back in? What evidence would convince the skeptic?</li>
+</ul></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Protecting a Team Ritual Under Pressure</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Protecting a Team Ritual Under Pressure</h2>
+<p><strong>Duration:</strong> 40–50 minutes  </p>
+<p><strong>Purpose:</strong> Practice securing buy-in for a compounding routine when stakeholders want a leap.</p>
+<h3>Four roles</h3>
+<ol>
+<li><strong>Supervisor (protagonist):</strong> Wants approval to run a two-week micro-habit trial with a visible board.</li>
+<li><strong>Traditionalist lead (antagonist):</strong> Prefers blitzes and public stretch goals; calls small habits “busywork.”</li>
+<li><strong>Ops analyst (skeptic):</strong> Needs a measurable leading indicator and a kill criteria for the trial.</li>
+<li><strong>Peer supervisor (ally or swing):</strong> Will support if the plan won’t dump extra work on neighboring teams.</li>
+</ol>
+<h3>Conflict thesis</h3>
+<p>Can the supervisor protect a small, compounding system without looking resistant to performance?</p>
+<h3>Success look-fors</h3>
+<ul>
+<li>One clear cue and owner</li>
+<li>One leading metric (not only the lagging KPI)</li>
+<li>A two-week review date</li>
+<li>No secret second plan that contradicts the ritual</li>
+</ul>
+<h3>Debrief prompts</h3>
+<ol>
+<li>Which arguments landed with the analyst vs. the traditionalist?</li>
+<li>How did the supervisor translate “1%” into manager-safe language?</li>
+<li>What would break the ritual in week two—and who owns prevention?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Tiny Gains, Visible Systems</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Tiny Gains, Visible Systems</h2>
+<p><strong>Unit goal:</strong> Turn big team goals into daily, compounding actions your crew can see and repeat.</p>
+<h3>Core ideas</h3>
+<ul>
+<li><strong>1% mindset:</strong> Small daily improvements compound; big leaps often reset the team.</li>
+<li><strong>Systems over goals alone:</strong> Goals name the outcome; systems name Tuesday’s behavior.</li>
+<li><strong>Habit loop:</strong> Cue → craving → response → reward — design all four, not only the goal.</li>
+<li><strong>Identity:</strong> Each completed micro-action is a vote for “we are a reliable team.”</li>
+</ul>
+<h3>Frontline leader checklist</h3>
+<ol>
+<li>Pick <strong>one</strong> long-term team goal and list 3 tiny actions that move it (each doable in under 5 minutes).</li>
+<li>Attach each action to an existing cue (start of shift, after stand-up, before handover).</li>
+<li>Write the habit loop for one behavior you will coach this week.</li>
+<li>Make the action visible (board, chat template, or checklist)—not only verbal.</li>
+<li>Remove one friction that blocks the new habit (missing tool, unclear owner, noisy channel).</li>
+<li>Schedule a 10-minute Friday review: keep, tweak, or drop.</li>
+</ol>
+<h3>Reflection</h3>
+<p>What single ritual would still run if you were out sick for two days—and who owns the cue?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — Personal Habit + Team-Visible Practice</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Operational Habits &amp; Execution · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>
