@@ -1,4 +1,4 @@
-# GL-Preview
+﻿# global-leadership-preview
 
 Static HTML publish surface for **Global Leadership** workshop units.
 
@@ -7,4 +7,4 @@ Static HTML publish surface for **Global Leadership** workshop units.
 - Editor catalog: `/_review/`
 - No Insulet / client workshops here
 
-Repo: https://github.com/lauro-eio/GL-Preview.git
+Repo: https://github.com/lauro-eio/global-leadership-preview.git
