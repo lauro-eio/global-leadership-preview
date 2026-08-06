@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negociación táctica — Negociación táctica y empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Negociación táctica y empresarial</p>
+      <h1>Negociación táctica</h1>
+      <p class="hero-lead">Ayudar a los líderes de primera línea a ir más allá de las posiciones de apertura en disputas de turno, andén y proveedores para descubrir intereses y generar más de una opción viable.</p>
+      <div class="hero-meta">
+        <span>GTY · U03</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Detrás del número: qué dice la evidencia sobre l</a>
+<a href="#opinion">El número de horas extra que no era sobre las ho</a>
+<a href="#assessment">Autodiagnóstico — ¿Negocias posiciones o interes</a>
+<a href="#case-1">Caso 1 — Priya y la exigencia fija de plantilla</a>
+<a href="#case-2">Caso 2 — Omar y la posición de la ventana de dev</a>
+<a href="#framework">Marco — Tarjeta de sondeo de intereses</a>
+<a href="#roleplay-1v1">Role-play 1:1 — Sacar a la luz el interés detrás</a>
+<a href="#roleplay-strategic">Role-play estratégico — Convertir dos posiciones</a>
+<a href="#key-notes">Puntos clave — Preguntar por qué antes de contra</a>
+<a href="#commitment">Compromiso — Dos sondeos antes de la contraofert</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Detrás del número: qué dice la evidencia sobre los intereses ocultos en las posiciones de piso</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Detrás del número: qué dice la evidencia sobre los intereses ocultos en las posiciones de piso</h2>
+<p>Una posición declarada es una exigencia. Un interés es la necesidad que esa exigencia intenta proteger. Los líderes de primera línea que solo contraofertan números se quedan atascados; los que preguntan para qué es el número abren espacio para moverse.</p>
+<h3>Posiciones vs. intereses</h3>
+<p>El encuadre popular de Fisher y Ury es ampliamente conocido, pero la tradición de investigación subyacente es más antigua: los negociadores integrativos que se enfocan en las necesidades de fondo superan a las tácticas puramente distributivas (Walton &amp; McKersie, 1965; Pruitt, 1981). En un piso, &quot;necesito cuatro personas&quot; puede proteger continuidad de entrenamiento, un patrón de descansos prometido, o el temor a perder una ventana de embarque — nada de lo cual aparece en el número.</p>
+<h3>Preguntas que sacan a la luz los intereses</h3>
+<p>Las preguntas dirigidas — por qué importa esto, qué problema resuelve, qué pasa si no se cumple — aumentan de forma confiable el intercambio de información y la generación de opciones (Pruitt, 1981; Thompson, 1991). Los supervisores que preguntan antes de contraofertar pasan menos tiempo en reafirmaciones estancadas.</p>
+<h3>Múltiples opciones vencen a una sola contraoferta</h3>
+<p>Una vez nombrados los intereses, generar dos o más paquetes que podrían satisfacer a ambos lados mejora la calidad del acuerdo (Pruitt, 1981). Una sola contraposisición reinicia la pelea distributiva.</p>
+<h3>Aplicación en el piso</h3>
+<p>Antes de reafirmar tu pedido: escribe la posición del otro lado, adivina el interés, haz un sondeo, luego esboza dos opciones. Vuelve a revisar tu alternativa de retirada si la conversación se estanca (Sebenius, 1992).</p>
+<h3>Referencias seleccionadas</h3>
+<ul>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Sebenius, J. K. (1992). Negotiation analysis: A characterization and review. <em>Management Science, 38</em>(1), 18–38.</li>
+<li>Thompson, L. (1991). Information exchange in negotiation. <em>Journal of Experimental Social Psychology, 27</em>(2), 161–179.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>El número de horas extra que no era sobre las horas</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>El número de horas extra que no era sobre las horas</h2>
+<p>Un par insistió en &quot;nada de HE después de las 18:00 — punto.&quot; Yo contraoferté 19:00. Nos estancamos.</p>
+<p>Cuando por fin pregunté qué protegía las 18:00, la respuesta fue recoger a los niños, no el costo. Armamos una cuadrilla dividida: dos se quedaron hasta las 19:30 con flexibilidad el sábado; el resto salió a tiempo. Misma ventana de embarque. Interés distinto.</p>
+<p>Desperdicié veinte minutos tratando un horario como una pelea de números. El sondeo debió haber sido primero.</p>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Autodiagnóstico — ¿Negocias posiciones o intereses?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Este diagnóstico se abrirá en <strong>Google Forms</strong> para que tus respuestas se mantengan privadas y recibas tu perfil al enviar — no dentro de esta página.</p><p class="gate-note">Las preguntas y el puntaje viven en el formulario. Aquí aún no hay nada que completar.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Caso 1 — Priya y la exigencia fija de plantilla</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 1 — Priya y la exigencia fija de plantilla</h2>
+<p>Priya necesita dos temporales para un pico. El contacto de la agencia se mantiene en &quot;mínimo cuatro o nada.&quot; Priya contraoferta con dos. Punto muerto.</p>
+<p>Interés detrás de cuatro: el despacho de la agencia ya programó una camioneta para cuatro y absorberá el costo si no. Opciones: Priya toma cuatro por dos días y libera temprano; o comparte dos con una línea hermana.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Qué sondeo saca a la luz la restricción de la camioneta?</li>
+<li>¿Qué opción protege ambos intereses?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Caso 2 — Omar y la posición de la ventana de devolución</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 2 — Omar y la posición de la ventana de devolución</h2>
+<p>Un proveedor dice &quot;devoluciones solo dentro de 24 horas.&quot; Omar necesita 72 por la retención de calidad. Ambos reafirman.</p>
+<p>Interés detrás de 24: rotación de inventario y espacio en anaquel. Interés detrás de 72: confirmación de defectos. Opciones: 48 con evidencia fotográfica; o 72 solo para SKUs críticos de seguridad.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Posiciones vs. intereses?</li>
+<li>Diseña una tercera opción que ninguno declaró primero.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Marco — Tarjeta de sondeo de intereses</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Marco — Tarjeta de sondeo de intereses</h2>
+<h3>1. Captura posiciones</h3>
+<ul>
+<li>Su pedido:</li>
+<li>Mi pedido:</li>
+</ul>
+<h3>2. Sondeo (elige uno)</h3>
+<ul>
+<li>¿Por qué es importante eso ahora mismo?</li>
+<li>¿Qué te resuelve eso?</li>
+<li>¿Qué pasa si no podemos hacer eso?</li>
+</ul>
+<h3>3. Nombra intereses</h3>
+<ul>
+<li>El de ellos:</li>
+<li>El mío:</li>
+</ul>
+<h3>4. Opciones (mínimo dos)</h3>
+<p>1.</p>
+<p>2.</p>
+<h3>5. Elige y revisa la alternativa de retirada</h3>
+<p>Si ninguna funciona, declara el BATNA y pausa — no inventes una tercera posición falsa.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-play 1:1 — Sacar a la luz el interés detrás de un no duro</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play 1:1 — Sacar a la luz el interés detrás de un no duro</h2>
+<p><strong>Preparación:</strong> Un par se niega a liberar un montacargas &quot;hasta el viernes.&quot; Tú lo necesitas mañana por un atraso.</p>
+<p><strong>Objetivo:</strong> Un sondeo, intereses nombrados, dos opciones antes de cualquier contra-número.</p>
+<p><strong>Debrief:</strong> ¿Preguntaste antes de contraofertar?</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Role-play estratégico — Convertir dos posiciones en tres opciones</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play estratégico — Convertir dos posiciones en tres opciones</h2>
+<p><strong>Roles:</strong> Lead de línea, planificador, lead de materiales, observador.</p>
+<p><strong>Situación:</strong> El planificador sostiene una fecha de congelamiento; la línea necesita una excepción por un adelanto del cliente.</p>
+<p><strong>Éxito:</strong> Intereses nombrados; tres opciones en el pizarrón; una seleccionada con un estándar verificable.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Puntos clave — Preguntar por qué antes de contraofertar</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Puntos clave — Preguntar por qué antes de contraofertar</h2>
+<p><strong>Objetivo de la unidad:</strong> Ir más allá de las posiciones de apertura para descubrir intereses y generar más de una opción viable.</p>
+<h3>Ideas centrales</h3>
+<ul>
+<li>Las posiciones son exigencias; los intereses son necesidades (Pruitt, 1981).</li>
+<li>Pregunta por qué / qué resuelve antes de contraofertar.</li>
+<li>Dos opciones vencen a una contraposisición.</li>
+<li>Registra qué interés destrabó realmente el acuerdo.</li>
+</ul>
+<h3>Lista de verificación de primera línea</h3>
+<ol>
+<li>Escribe ambas posiciones en una línea cada una.</li>
+<li>Adivina el interés detrás de cada una.</li>
+<li>Haz un sondeo antes de reafirmar tu número.</li>
+<li>Esboza dos opciones de ganancia mutua.</li>
+<li>Solo entonces propón.</li>
+</ol>
+<h3>Reflexión</h3>
+<p>¿Dónde contraofertaste por última vez un número sin preguntar qué protegía?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Compromiso — Dos sondeos antes de la contraoferta</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Tu plan de compromiso se abrirá en <strong>Google Forms</strong> para que puedas enviarlo y guardar un registro — no como campos rellenables en esta página.</p><p class="gate-note">Nada que completar aquí hasta que el enlace del formulario esté listo.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Negociación táctica y empresarial · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

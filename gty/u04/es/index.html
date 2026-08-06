@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negociación táctica — Negociación táctica y empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Negociación táctica y empresarial</p>
+      <h1>Negociación táctica</h1>
+      <p class="hero-lead">Ayudar a los líderes de primera línea a inventar múltiples opciones viables bajo presión de tiempo para que las negociaciones de piso dejen de colapsar en una sola contraposisición.</p>
+      <div class="hero-meta">
+        <span>GTY · U04</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Más de una salida: qué dice la evidencia sobre g</a>
+<a href="#opinion">La falsa elección entre HE del sábado y perder e</a>
+<a href="#assessment">Autodiagnóstico — ¿Inventas opciones o intercamb</a>
+<a href="#case-1">Caso 1 — Lena y la trampa de la única contraofer</a>
+<a href="#case-2">Caso 2 — Chris y la pelea por la ventana de mant</a>
+<a href="#framework">Marco — Escalera de opciones para acuerdos de pi</a>
+<a href="#roleplay-1v1">Role-play 1:1 — Armar dos paquetes en cinco minu</a>
+<a href="#roleplay-strategic">Role-play estratégico — Ampliar el pastel en un </a>
+<a href="#key-notes">Puntos clave — Dos opciones mínimo antes de prop</a>
+<a href="#commitment">Compromiso — Siempre traer un segundo paquete</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Más de una salida: qué dice la evidencia sobre generar opciones bajo presión</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Más de una salida: qué dice la evidencia sobre generar opciones bajo presión</h2>
+<p>Cuando el tiempo es corto, los supervisores a menudo inventan una sola contraoferta y la llaman negociación. La investigación sobre negociación integrativa muestra que generar múltiples paquetes antes de elegir mejora los resultados conjuntos (Pruitt, 1981; Thompson, 1991).</p>
+<h3>Sesgo del pastel fijo</h3>
+<p>Los negociadores asumen sistemáticamente un pastel fijo y pierden intercambios entre asuntos (Thompson &amp; Hastie, 1990). En un piso, eso se ve como negociar solo sobre horas cuando la secuencia, la mezcla de habilidades y la ayuda temporal también están disponibles.</p>
+<h3>Inventar por separado de decidir</h3>
+<p>Separar la invención de la evaluación aumenta el número de opciones sobre la mesa (la lógica de lluvia de ideas de Osborn aplicada en entornos de negociación; ver Pruitt, 1981). Una lista de dos minutos &quot;sin juzgar&quot; vence a un sí/no inmediato sobre la primera idea.</p>
+<h3>Logrolling</h3>
+<p>Intercambiar entre asuntos valorados de forma distinta — logrolling — crea ganancia mutua sin dividir cada asunto por la mitad (Froman &amp; Cohen, 1970; Pruitt, 1981). Un par que valora más el fin de semana libre que las HE del viernes puede intercambiar si tú valoras más la cobertura del viernes.</p>
+<h3>Regla de piso</h3>
+<p>Mínimo dos paquetes con los que cada lado podría vivir antes de proponer. Si solo tienes uno, todavía estás en modo posicional.</p>
+<h3>Referencias seleccionadas</h3>
+<ul>
+<li>Froman, L. A., &amp; Cohen, M. D. (1970). Compromise and logroll. <em>Behavioral Science, 15</em>, 1–15.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Thompson, L. (1991). Information exchange in negotiation. <em>Journal of Experimental Social Psychology, 27</em>(2), 161–179.</li>
+<li>Thompson, L., &amp; Hastie, R. (1990). Social perception in negotiation. <em>Organizational Behavior and Human Decision Processes, 47</em>(1), 98–123.</li>
+</ul>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>La falsa elección entre HE del sábado y perder el camión</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>La falsa elección entre HE del sábado y perder el camión</h2>
+<p>Le dije a mi equipo que era HE del sábado o un embarque perdido. Eso fue flojo.</p>
+<p>En realidad teníamos tres palancas: traer dos temporales certificados de la planta hermana, mover un SKU no crítico, y correr un bloque corto de HE el viernes. Yo había enmarcado un binario falso porque estaba cansado. Una vez que listamos opciones sin juzgar, el camión salió sin un llamado completo del sábado.</p>
+<p>Ahora me obligo a escribir dos paquetes antes de abrir la boca.</p>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Autodiagnóstico — ¿Inventas opciones o intercambias concesiones?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Este diagnóstico se abrirá en <strong>Google Forms</strong> para que tus respuestas se mantengan privadas y recibas tu perfil al enviar — no dentro de esta página.</p><p class="gate-note">Las preguntas y el puntaje viven en el formulario. Aquí aún no hay nada que completar.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Caso 1 — Lena y la trampa de la única contraoferta</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 1 — Lena y la trampa de la única contraoferta</h2>
+<p>Lena necesita cobertura de fin de semana. El par no ofrece nada. Lena contraoferta con &quot;medio sábado.&quot; Sigue estancada. Opciones faltantes: intercambiar HE del lunes, dividir la cuadrilla, pedir prestado del banco de entrenamiento.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Qué asuntos quedaron fuera de la mesa?</li>
+<li>Arma dos paquetes.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Caso 2 — Chris y la pelea por la ventana de mantenimiento</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 2 — Chris y la pelea por la ventana de mantenimiento</h2>
+<p>Mantenimiento quiere una ventana de 6 horas; producción ofrece 2. Guerra de una sola contraoferta. Opciones: paro por etapas, línea paralela, parcial nocturno.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Dónde está el sesgo del pastel fijo?</li>
+<li>Diseña un logroll.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Marco — Escalera de opciones para acuerdos de piso</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Marco — Escalera de opciones para acuerdos de piso</h2>
+<h3>Peldaño 1 — Asuntos</h3>
+<p>Lista cada asunto en juego (tiempo, plantilla, secuencia, retención de calidad, dueño del costo).</p>
+<h3>Peldaño 2 — Inventar (2 minutos)</h3>
+<p>Sin evaluar. Apunta a 4+ ideas crudas.</p>
+<h3>Peldaño 3 — Empaquetar</h3>
+<p>Arma el Paquete A y el Paquete B. Cada uno debe darle a ambos lados algo que les importa.</p>
+<h3>Peldaño 4 — Proponer</h3>
+<p>Ofrece ambos paquetes. Pregunta cuál encaja mejor — no defiendas solo uno.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-play 1:1 — Armar dos paquetes en cinco minutos</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play 1:1 — Armar dos paquetes en cinco minutos</h2>
+<p><strong>Preparación:</strong> Pelea de presupuesto de temporales con el socio de RR. HH. Posiciones: 0 temporales vs. 6 temporales.</p>
+<p><strong>Objetivo:</strong> Dos paquetes en cinco minutos usando mezcla de habilidades y duración, no solo plantilla.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Role-play estratégico — Ampliar el pastel en un día de cuadrilla corta</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play estratégico — Ampliar el pastel en un día de cuadrilla corta</h2>
+<p><strong>Roles:</strong> Dos leads de línea, planificador, seguridad.</p>
+<p><strong>Situación:</strong> Mismos flotantes compartidos; ambas líneas reclaman prioridad.</p>
+<p><strong>Éxito:</strong> Escalera de opciones usada; dos paquetes; uno seleccionado sin humillación.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Puntos clave — Dos opciones mínimo antes de proponer</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Puntos clave — Dos opciones mínimo antes de proponer</h2>
+<p><strong>Objetivo de la unidad:</strong> Inventar múltiples opciones viables bajo presión en lugar de una sola contraposisición.</p>
+<h3>Ideas centrales</h3>
+<ul>
+<li>El sesgo del pastel fijo oculta intercambios (Thompson &amp; Hastie, 1990).</li>
+<li>Inventa primero, evalúa después.</li>
+<li>Haz logrolling entre asuntos con pesos de valor distintos.</li>
+<li>Dos paquetes mínimo.</li>
+</ul>
+<h3>Lista de verificación</h3>
+<ol>
+<li>Lista los asuntos (no solo el número caliente).</li>
+<li>Lluvia de ideas de 3+ opciones, sin juzgar por dos minutos.</li>
+<li>Arma dos paquetes que ambos lados podrían aceptar.</li>
+<li>Propón paquetes, no concesiones sueltas.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Compromiso — Siempre traer un segundo paquete</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Tu plan de compromiso se abrirá en <strong>Google Forms</strong> para que puedas enviarlo y guardar un registro — no como campos rellenables en esta página.</p><p class="gate-note">Nada que completar aquí hasta que el enlace del formulario esté listo.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Negociación táctica y empresarial · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

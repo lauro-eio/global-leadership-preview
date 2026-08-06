@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negociación táctica — Negociación táctica y empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Negociación táctica y empresarial</p>
+      <h1>Negociación táctica</h1>
+      <p class="hero-lead">Ayudar a los líderes de primera línea a definir un BATNA real — la mejor alternativa si no hay acuerdo — antes de llamadas difíciles en el piso, para que no se aferren a posiciones vacías ni acepten malos acuerdos por miedo.</p>
+      <div class="hero-meta">
+        <span>GTY · U06</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Conoce tu salida: qué dice la evidencia sobre al</a>
+<a href="#opinion">El proveedor que necesitaba demasiado porque no </a>
+<a href="#assessment">Autodiagnóstico — ¿Tienes una salida real?</a>
+<a href="#case-1">Caso 1 — Sofía y la trampa del único transportis</a>
+<a href="#case-2">Caso 2 — Marcus y el par que sí tenía opciones</a>
+<a href="#framework">Marco — Hoja de verificación de BATNA para super</a>
+<a href="#roleplay-1v1">Role-play 1:1 — Enunciar una salida sin amenazar</a>
+<a href="#roleplay-strategic">Role-play estratégico — Elegir si cerrar o retir</a>
+<a href="#key-notes">Puntos clave — BATNA como plan verificado, no co</a>
+<a href="#commitment">Compromiso — Escribir la alternativa antes de la</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Conoce tu salida: qué dice la evidencia sobre alternativas en la negociación</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Conoce tu salida: qué dice la evidencia sobre alternativas en la negociación</h2>
+<p>BATNA significa tu mejor alternativa a un acuerdo negociado — lo que realmente harás si esta conversación falla. Es un plan, no una amenaza.</p>
+<h3>Por qué las alternativas definen el poder</h3>
+<p>La disposición a sostener o abandonar un acuerdo sigue más la calidad de las alternativas que la dureza retórica (Kelley &amp; Thibaut, 1978; Pinkley et al., 1994). Un supervisor sin transportista de respaldo aceptará un mal acuerdo de detención; uno con un segundo transportista verificado negocia de forma distinta.</p>
+<h3>Mejora tu BATNA antes de regatear</h3>
+<p>La investigación aconseja invertir en alternativas antes de la conversación, no inventarlas a mitad de un farol (Sebenius, 1992). Llamar a un segundo proveedor por una cotización real es trabajo de BATNA; decir &quot;encontraremos a alguien&quot; sin nombre ni ETA no lo es.</p>
+<h3>No confundas BATNA con el piso mínimo</h3>
+<p>Tu punto de reserva es el peor acuerdo que aceptarás. Tu BATNA es el camino que tomas si rechazas todos los acuerdos. Mezclarlos crea falsa bravura o pánico (Raiffa, 1982; Sebenius, 1992).</p>
+<h3>Traducción al piso</h3>
+<p>Antes de una llamada difícil: escribe qué harás si no hay acuerdo para cierta hora; calcúlalo; confirma que está disponible. Entra con esa carta boca abajo — úsala para decidir, no para actuar.</p>
+<h3>Referencias seleccionadas</h3>
+<ul>
+<li>Kelley, H. H., &amp; Thibaut, J. W. (1978). <em>Interpersonal Relations</em>. Wiley.</li>
+<li>Pinkley, R. L., Neale, M. A., &amp; Bennett, R. J. (1994). The impact of alternatives to settlement. <em>Organizational Behavior and Human Decision Processes, 57</em>(1), 97–116.</li>
+<li>Raiffa, H. (1982). <em>The Art and Science of Negotiation</em>. Harvard University Press.</li>
+<li>Sebenius, J. K. (1992). Negotiation analysis. <em>Management Science, 38</em>(1), 18–38.</li>
+</ul>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>El proveedor que necesitaba demasiado porque no tenía plan B</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>El proveedor que necesitaba demasiado porque no tenía plan B</h2>
+<p>Me decía que estaba &quot;enfocado en la relación.&quot; Estaba dependiente.</p>
+<p>Un proveedor de piezas especializadas empezó a fallar ventanas. No tenía una segunda fuente calificada. Cada negociación era pánico disfrazado de paciencia. Cuando por fin logré un segundo proveedor a través de calidad — configuración lenta y costosa — la siguiente conversación con el primero cambió de la noche a la mañana. El mismo tono de mi parte; distinta columna vertebral por tener una alternativa real.</p>
+<p>BATNA es tarea hecha temprano.</p>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Autodiagnóstico — ¿Tienes una salida real?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Este diagnóstico se abrirá en <strong>Google Forms</strong> para que tus respuestas se mantengan privadas y recibas tu perfil al enviar — no dentro de esta página.</p><p class="gate-note">Las preguntas y el puntaje viven en el formulario. Aquí aún no hay nada que completar.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Caso 1 — Sofía y la trampa del único transportista</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 1 — Sofía y la trampa del único transportista</h2>
+<p>Sofía tiene un solo transportista refrigerado. Las tarifas suben. No tiene cotización de un segundo transportista.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Cuál es su BATNA actual — de verdad?</li>
+<li>¿Qué tarea mejora ese BATNA antes de la próxima llamada de tarifas?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Caso 2 — Marcus y el par que sí tenía opciones</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 2 — Marcus y el par que sí tenía opciones</h2>
+<p>Marcus necesita flotantes. Su par puede sacar de la banca de entrenamiento o operar corto. Marcus no tiene plan si le niegan, salvo escalar al gerente.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>Compara los BATNA de ambos lados.</li>
+<li>¿Cómo debería Marcus cambiar la preparación antes de pedir de nuevo?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Marco — Hoja de verificación de BATNA para supervisores</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Marco — Hoja de verificación de BATNA para supervisores</h2>
+<p><strong>Negociación:</strong></p>
+<p><strong>Plazo si no hay acuerdo:</strong></p>
+<div class="table-wrap"><table>
+<tr><th>Campo</th><th>Notas</th></tr>
+<tr><td>Mejor camino alternativo</td><td></td></tr>
+<tr><td>Dueño / proveedor / par que lo habilita</td><td></td></tr>
+<tr><td>Tiempo para activarlo</td><td></td></tr>
+<tr><td>Impacto en costo / calidad</td><td></td></tr>
+<tr><td>Confirmado (fecha)</td><td></td></tr>
+<tr><td>Punto de reserva (peor acuerdo aceptable)</td><td></td></tr>
+</table></div>
+<p>Regla: si &quot;Confirmado&quot; está en blanco, aún no tienes un BATNA — tienes una esperanza.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-play 1:1 — Enunciar una salida sin amenazar</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play 1:1 — Enunciar una salida sin amenazar</h2>
+<p><strong>Escenario:</strong> La agencia temporal no mueve la tarifa. Tienes lista una cotización de una segunda agencia.</p>
+<p><strong>Objetivo:</strong> Decidir usando el BATNA; comunicar con calma, sin teatro.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Role-play estratégico — Elegir si cerrar o retirarse</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play estratégico — Elegir si cerrar o retirarse</h2>
+<p><strong>Roles:</strong> Líder de operaciones, proveedor, finanzas, calidad (estado de segunda fuente).</p>
+<p><strong>Éxito:</strong> Hoja de verificación completada; la decisión coincide con la calidad de la alternativa confirmada.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Puntos clave — BATNA como plan verificado, no como farol</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Puntos clave — BATNA como plan verificado, no como farol</h2>
+<p><strong>Objetivo de la unidad:</strong> Definir una salida real antes de llamadas difíciles en el piso.</p>
+<h3>Ideas centrales</h3>
+<ul>
+<li>BATNA = el mejor camino si no hay acuerdo (no un guion de amenaza).</li>
+<li>Las alternativas crean poder (Pinkley et al., 1994).</li>
+<li>Mejora el BATNA antes de regatear (Sebenius, 1992).</li>
+<li>Punto de reserva ≠ BATNA.</li>
+</ul>
+<h3>Lista de verificación</h3>
+<ol>
+<li>Si no hay acuerdo para ___, haré ___.</li>
+<li>Costo/tiempo de ese camino:</li>
+<li>¿Confirmado disponible? S/N</li>
+<li>Peor acuerdo que aún aceptaré:</li>
+<li>Entra sabiendo ambos números.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Compromiso — Escribir la alternativa antes de la reunión</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Tu plan de compromiso se abrirá en <strong>Google Forms</strong> para que puedas enviarlo y guardar un registro — no como campos rellenables en esta página.</p><p class="gate-note">Nada que completar aquí hasta que el enlace del formulario esté listo.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Negociación táctica y empresarial · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

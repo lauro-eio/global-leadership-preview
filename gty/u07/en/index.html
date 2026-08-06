@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tactical Negotiation — Tactical &amp; Enterprise Negotiation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Tactical &amp; Enterprise Negotiation</p>
+      <h1>Tactical Negotiation</h1>
+      <p class="hero-lead">Help frontline leaders recover stuck positional confrontations into principled, interest-based dialogue with peers and vendors without pretending the fight never happened.</p>
+      <div class="hero-meta">
+        <span>GTY · U07</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">From Standoff to Dialogue: What the Evidence Say</a>
+<a href="#opinion">The Argument I Restarted Instead of Replaying</a>
+<a href="#assessment">Self-Assessment — Can You Restart a Deadlocked N</a>
+<a href="#case-1">Case 1 — Two Leads, One Shared Floater, Zero Mov</a>
+<a href="#case-2">Case 2 — The Vendor Call That Needed a Restart</a>
+<a href="#framework">Framework — Standoff Reset Script</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Restarting After Both Sides Have</a>
+<a href="#roleplay-strategic">Strategic Role-Play — Pulling a Room Out of Posi</a>
+<a href="#key-notes">Key Notes — Resetting a Positional Fight Midstre</a>
+<a href="#commitment">Commitment — One Restart Phrase Ready</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>From Standoff to Dialogue: What the Evidence Says About Recovering Deadlocked Floor Negotiations</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>From Standoff to Dialogue: What the Evidence Says About Recovering Deadlocked Floor Negotiations</h2>
+<p>Sometimes the failure is not preparation — it is that both sides are already dug in. Recovery skills matter as much as opening skills.</p>
+<h3>Deadlock dynamics</h3>
+<p>Positional escalation increases commitment to a public stance, making retreat costly to face (Brockner &amp; Rubin, 1985). On a floor, that looks like repeating the same number louder while crews watch.</p>
+<h3>Changing the game midstream</h3>
+<p>Research on renegotiation and process intervention suggests parties can reset by changing the conversational frame: separate people from problem, ask interest questions, invent options, and introduce standards (Walton &amp; McKersie, 1965; Pruitt, 1981; Raiffa, 1982). The key is an explicit restart, not a silent hope the other side softens.</p>
+<h3>Negotiation jujitsu (practical read)</h3>
+<p>When the other side pushes position, avoid counter-pushing. Ask questions, invite criticism of your ideas, and reframe attacks on you as attacks on the problem (a tactic set popularized in practitioner literature and consistent with integrative process advice in Pruitt, 1981).</p>
+<h3>Floor restart</h3>
+<p>A usable script: &quot;We&#x27;re stuck restating numbers. I want to reset — interest, options, standard — starting with what this protects for you.&quot; Then shut up and listen.</p>
+<h3>Selected references</h3>
+<ul>
+<li>Brockner, J., &amp; Rubin, J. Z. (1985). <em>Entrapment in Escalating Conflicts</em>. Springer.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Raiffa, H. (1982). <em>The Art and Science of Negotiation</em>. Harvard University Press.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The Argument I Restarted Instead of Replaying</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The Argument I Restarted Instead of Replaying</h2>
+<p>A vendor and I had already burned fifteen minutes. Same two sentences. I felt the crew watching.</p>
+<p>I said, &quot;We&#x27;re not moving. I want to restart — not re-argue. What is the fee protecting for you on your side?&quot; Silence, then an answer about a dispatcher metric. We built a photo-evidence exception. Same people. Different process.</p>
+<p>The restart felt awkward. Awkward beat another loop.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — Can You Restart a Deadlocked Negotiation?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Two Leads, One Shared Floater, Zero Movement</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Two Leads, One Shared Floater, Zero Movement</h2>
+<p>Both leads claim the floater &quot;all day.&quot; Third repeat. Crew waiting.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>Write a restart script.</li>
+<li>What options appear after interests?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — The Vendor Call That Needed a Restart</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — The Vendor Call That Needed a Restart</h2>
+<p>Invoice dispute; both sides reading contract fragments competitively.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>When is restart appropriate vs escalation to manager?</li>
+<li>How to introduce the full contract as standard mid-call?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — Standoff Reset Script</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — Standoff Reset Script</h2>
+<p><strong>When:</strong> Same positions repeated ≥2 times with rising heat.</p>
+<p><strong>Say:</strong></p>
+<ol>
+<li>&quot;We&#x27;re stuck restating positions.&quot;</li>
+<li>&quot;I want to reset the process, not score a win.&quot;</li>
+<li>&quot;What is your position protecting for you?&quot;</li>
+<li>&quot;Here is what mine protects for me.&quot;</li>
+<li>&quot;Let&#x27;s list two options that could cover both.&quot;</li>
+<li>&quot;What standard should we use to choose?&quot;</li>
+</ol>
+<p><strong>Don&#x27;t:</strong> Relitigate tone history in the same breath as the reset (split first if needed).</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Restarting After Both Sides Have Dug In</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Restarting After Both Sides Have Dug In</h2>
+<p><strong>Setup:</strong> You and a peer have already argued coverage for five minutes.</p>
+<p><strong>Aim:</strong> Deliver reset script; reach two options.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Pulling a Room Out of Positional Mode</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Pulling a Room Out of Positional Mode</h2>
+<p><strong>Roles:</strong> Two supervisors mid-fight, manager facilitator, observer.</p>
+<p><strong>Success:</strong> Facilitator or a supervisor lands a reset; room moves to interests/options.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Resetting a Positional Fight Midstream</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Resetting a Positional Fight Midstream</h2>
+<p><strong>Unit goal:</strong> Recover stuck positional confrontations into interest-based dialogue.</p>
+<h3>Core ideas</h3>
+<ul>
+<li>Public commitment deepens deadlock (Brockner &amp; Rubin, 1985).</li>
+<li>Explicit restart &gt; hoping they soften.</li>
+<li>Don&#x27;t counter-push; question and reframe (Pruitt, 1981).</li>
+<li>Carry the full sequence: people/problem → interests → options → criteria → BATNA.</li>
+</ul>
+<h3>Checklist</h3>
+<ol>
+<li>Name the stuck pattern out loud.</li>
+<li>Propose a restart frame.</li>
+<li>Ask one interest question.</li>
+<li>Invent two options.</li>
+<li>Anchor to a standard; know walk-away.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — One Restart Phrase Ready</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Tactical &amp; Enterprise Negotiation · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

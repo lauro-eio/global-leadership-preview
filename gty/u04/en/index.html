@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tactical Negotiation — Tactical &amp; Enterprise Negotiation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Tactical &amp; Enterprise Negotiation</p>
+      <h1>Tactical Negotiation</h1>
+      <p class="hero-lead">Help frontline leaders invent multiple workable options under time pressure so floor negotiations stop collapsing into a single counter-position.</p>
+      <div class="hero-meta">
+        <span>GTY · U04</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">More Than One Way Out: What the Evidence Says Ab</a>
+<a href="#opinion">The False Choice Between Saturday OT and Missing</a>
+<a href="#assessment">Self-Assessment — Do You Invent Options or Trade</a>
+<a href="#case-1">Case 1 — Lena and the Single-Counter Trap</a>
+<a href="#case-2">Case 2 — Chris and the Maintenance Window Fight</a>
+<a href="#framework">Framework — Option Ladder for Floor Deals</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Building Two Packages in Five Mi</a>
+<a href="#roleplay-strategic">Strategic Role-Play — Expanding the Pie on a Sho</a>
+<a href="#key-notes">Key Notes — Two Options Minimum Before You Propo</a>
+<a href="#commitment">Commitment — Always Bring a Second Package</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>More Than One Way Out: What the Evidence Says About Option Generation Under Pressure</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>More Than One Way Out: What the Evidence Says About Option Generation Under Pressure</h2>
+<p>When time is short, supervisors often invent one counter and call it negotiation. Research on integrative bargaining shows that generating multiple packages before choosing improves joint outcomes (Pruitt, 1981; Thompson, 1991).</p>
+<h3>Fixed-pie bias</h3>
+<p>Negotiators systematically assume a fixed pie and miss trades across issues (Thompson &amp; Hastie, 1990). On a floor, that looks like trading only on hours when sequence, skill mix, and temporary help are also available.</p>
+<h3>Brainstorm separately from decide</h3>
+<p>Separating invention from evaluation increases the number of options on the table (Osborn&#x27;s brainstorming logic applied in negotiation settings; see Pruitt, 1981). A two-minute &quot;no judging&quot; list beats an immediate yes/no on the first idea.</p>
+<h3>Logrolling</h3>
+<p>Trading across differently valued issues — logrolling — creates mutual gain without splitting every issue down the middle (Froman &amp; Cohen, 1970; Pruitt, 1981). A peer who values weekend off more than Friday OT can trade if you value Friday coverage more.</p>
+<h3>Floor rule</h3>
+<p>Minimum two packages that each side could live with before you propose. If you only have one, you are still in positional mode.</p>
+<h3>Selected references</h3>
+<ul>
+<li>Froman, L. A., &amp; Cohen, M. D. (1970). Compromise and logroll. <em>Behavioral Science, 15</em>, 1–15.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Thompson, L. (1991). Information exchange in negotiation. <em>Journal of Experimental Social Psychology, 27</em>(2), 161–179.</li>
+<li>Thompson, L., &amp; Hastie, R. (1990). Social perception in negotiation. <em>Organizational Behavior and Human Decision Processes, 47</em>(1), 98–123.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The False Choice Between Saturday OT and Missing the Truck</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The False Choice Between Saturday OT and Missing the Truck</h2>
+<p>I told my team it was Saturday OT or a missed shipment. That was lazy.</p>
+<p>We actually had three levers: pull two certified temps from sister plant, move a non-critical SKU, and run a short OT block Friday. I had framed a false binary because I was tired. Once we listed options without judging, the truck left without a full Saturday call-in.</p>
+<p>Now I force myself to write two packages before I open my mouth.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — Do You Invent Options or Trade Concessions?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Lena and the Single-Counter Trap</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Lena and the Single-Counter Trap</h2>
+<p>Lena needs weekend coverage. Peer offers nothing. Lena counters with &quot;half Saturday.&quot; Still stuck. Missing options: swap Monday OT, split crew, borrow from training bench.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>What issues were left off the table?</li>
+<li>Build two packages.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — Chris and the Maintenance Window Fight</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — Chris and the Maintenance Window Fight</h2>
+<p>Maintenance wants a 6-hour window; production offers 2. Single counter war. Options: staged downtime, parallel line, night partial.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>Where is fixed-pie bias?</li>
+<li>Design a logroll.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — Option Ladder for Floor Deals</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — Option Ladder for Floor Deals</h2>
+<h3>Rung 1 — Issues</h3>
+<p>List every issue in play (time, headcount, sequence, quality hold, cost owner).</p>
+<h3>Rung 2 — Invent (2 minutes)</h3>
+<p>No evaluating. Aim for 4+ raw ideas.</p>
+<h3>Rung 3 — Package</h3>
+<p>Build Package A and Package B. Each must give both sides something they care about.</p>
+<h3>Rung 4 — Propose</h3>
+<p>Offer both packages. Ask which fits better — don&#x27;t defend only one.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Building Two Packages in Five Minutes</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Building Two Packages in Five Minutes</h2>
+<p><strong>Setup:</strong> Temp budget fight with HR partner. Positions: 0 temps vs 6 temps.</p>
+<p><strong>Aim:</strong> Two packages in five minutes using skill mix and duration, not just headcount.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Expanding the Pie on a Short Crew Day</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Expanding the Pie on a Short Crew Day</h2>
+<p><strong>Roles:</strong> Two line leads, planner, safety.</p>
+<p><strong>Situation:</strong> Same shared floaters; both lines claim priority.</p>
+<p><strong>Success:</strong> Option ladder used; two packages; one selected without humiliation.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Two Options Minimum Before You Propose</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Two Options Minimum Before You Propose</h2>
+<p><strong>Unit goal:</strong> Invent multiple workable options under pressure instead of a single counter-position.</p>
+<h3>Core ideas</h3>
+<ul>
+<li>Fixed-pie bias hides trades (Thompson &amp; Hastie, 1990).</li>
+<li>Invent first, evaluate second.</li>
+<li>Logroll across issues with different value weights.</li>
+<li>Two packages minimum.</li>
+</ul>
+<h3>Checklist</h3>
+<ol>
+<li>List issues (not just the hot number).</li>
+<li>Brainstorm 3+ options, no judging for two minutes.</li>
+<li>Build two packages both sides could accept.</li>
+<li>Propose packages, not single concessions.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — Always Bring a Second Package</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Tactical &amp; Enterprise Negotiation · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

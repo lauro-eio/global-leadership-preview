@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tactical Negotiation — Tactical &amp; Enterprise Negotiation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Tactical &amp; Enterprise Negotiation</p>
+      <h1>Tactical Negotiation</h1>
+      <p class="hero-lead">Help frontline leaders anchor floor negotiations to objective criteria — SOP, SLA, safety rules, posted rates — instead of splitting the difference or winning by volume.</p>
+      <div class="hero-meta">
+        <span>GTY · U05</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Fair by What Standard: What the Evidence Says Ab</a>
+<a href="#opinion">The Split-the-Difference Detention Call I Should</a>
+<a href="#assessment">Self-Assessment — Do You Negotiate by Feeling or</a>
+<a href="#case-1">Case 1 — Ava and the Handshake Rate</a>
+<a href="#case-2">Case 2 — Ben and the Safety Shortcut Pressure</a>
+<a href="#framework">Framework — Criteria Anchor Card</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Bringing the SLA into the Argume</a>
+<a href="#roleplay-strategic">Strategic Role-Play — Settling a Fee Against a W</a>
+<a href="#key-notes">Key Notes — Anchor to a Standard You Can Both Ch</a>
+<a href="#commitment">Commitment — Name the Standard Before the Bargai</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Fair by What Standard: What the Evidence Says About Objective Criteria in Everyday Negotiation</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Fair by What Standard: What the Evidence Says About Objective Criteria in Everyday Negotiation</h2>
+<p>Splitting the difference feels fair and often isn&#x27;t. Negotiation analysis shows settlements anchored to external, verifiable standards tend to be more durable and less resentful (Raiffa, 1982).</p>
+<h3>Why &quot;feel fair&quot; fails</h3>
+<p>Without a shared yardstick, each side uses different fairness scripts — equality, equity, need — and talks past each other (Deutsch, 1975). On a dock, &quot;meet in the middle&quot; on a detention fee can violate a contract clock both sides already signed.</p>
+<h3>External standards</h3>
+<p>Useful floor standards: posted appointment windows, rate cards, SOPs, safety lockout rules, SLA response times, published lead times. Raiffa&#x27;s work emphasizes that parties who can point to a checkable reference settle with less residual conflict (Raiffa, 1982).</p>
+<h3>Process legitimacy</h3>
+<p>People accept outcomes more readily when the process cites a legitimate standard (Lind &amp; Tyler, 1988). Naming the standard early is a process move, not a delay tactic.</p>
+<h3>Floor practice</h3>
+<p>Before bargaining a number, name the document or rule you will use. If none exists, agree how you will choose a standard — then negotiate.</p>
+<h3>Selected references</h3>
+<ul>
+<li>Deutsch, M. (1975). Equity, equality, and need. <em>Journal of Social Issues, 31</em>(3), 137–149.</li>
+<li>Lind, E. A., &amp; Tyler, T. R. (1988). <em>The Social Psychology of Procedural Justice</em>. Plenum.</li>
+<li>Raiffa, H. (1982). <em>The Art and Science of Negotiation</em>. Harvard University Press.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The Split-the-Difference Detention Call I Should Have Documented</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The Split-the-Difference Detention Call I Should Have Documented</h2>
+<p>I split a detention fee &quot;to keep the relationship.&quot; The carrier left happy. Finance later showed the appointment log cleared us. I taught the carrier that tone beats paperwork.</p>
+<p>Now I put the standard on the table first: &quot;Let&#x27;s open the appointment log and the contract window together.&quot; Sometimes we still concede — but as a choice, not because I was afraid of conflict.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — Do You Negotiate by Feeling or by Standard?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Ava and the Handshake Rate</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Ava and the Handshake Rate</h2>
+<p>Ava&#x27;s predecessor promised a vendor an off-card rate. Vendor insists. Ava has the current rate card.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>What is the objective standard?</li>
+<li>How does Ava honor relationship without rewriting the card silently?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — Ben and the Safety Shortcut Pressure</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — Ben and the Safety Shortcut Pressure</h2>
+<p>Production pushes to skip a lockout step &quot;just this once.&quot; Ben feels pressure to be a team player.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>Which standard is non-negotiable?</li>
+<li>How does Ben offer options that still honor the rule?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — Criteria Anchor Card</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — Criteria Anchor Card</h2>
+<ol>
+<li><strong>Issue:</strong></li>
+<li><strong>Candidate standards</strong> (SOP / SLA / contract / safety / rate card):</li>
+<li><strong>Open together:</strong> who brings the artifact?</li>
+<li><strong>What the standard says:</strong></li>
+<li><strong>Gap left to negotiate:</strong></li>
+<li><strong>If we concede:</strong> state it as exception, not rewrite of the rule.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Bringing the SLA into the Argument</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Bringing the SLA into the Argument</h2>
+<p><strong>Setup:</strong> Internal customer demands same-day turnaround outside SLA.</p>
+<p><strong>Aim:</strong> Open SLA together; invent options within the standard.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Settling a Fee Against a Written Rule</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Settling a Fee Against a Written Rule</h2>
+<p><strong>Roles:</strong> Receiving lead, carrier, finance partner, observer.</p>
+<p><strong>Success:</strong> Artifact opened; settlement explains any exception explicitly.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Anchor to a Standard You Can Both Check</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Anchor to a Standard You Can Both Check</h2>
+<p><strong>Unit goal:</strong> Anchor floor negotiations to objective criteria instead of volume or 50/50 splits.</p>
+<h3>Core ideas</h3>
+<ul>
+<li>Feel-fair scripts conflict (Deutsch, 1975).</li>
+<li>External standards settle cleaner (Raiffa, 1982).</li>
+<li>Name the standard early for process legitimacy (Lind &amp; Tyler, 1988).</li>
+</ul>
+<h3>Checklist</h3>
+<ol>
+<li>Identify the governing document or rule.</li>
+<li>Open it together.</li>
+<li>Negotiate only gaps the standard does not cover.</li>
+<li>If conceding, label it as a concession off the standard — not a new truth.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — Name the Standard Before the Bargain</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Tactical &amp; Enterprise Negotiation · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

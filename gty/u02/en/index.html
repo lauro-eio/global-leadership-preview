@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tactical Negotiation — Tactical &amp; Enterprise Negotiation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Tactical &amp; Enterprise Negotiation</p>
+      <h1>Tactical Negotiation</h1>
+      <p class="hero-lead">Help frontline leaders notice when ego, tone, or old history has fused with a shift or dock dispute, separate that personal stake from the substantive problem, and address each on its own terms so the negotiation can move again.</p>
+      <div class="hero-meta">
+        <span>GTY · U02</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">When Standing Becomes the Issue: What the Eviden</a>
+<a href="#opinion">The Radio Call That Was About Me, Not the Delay</a>
+<a href="#assessment">Self-Assessment — Are You Defending Standing or </a>
+<a href="#case-1">Case 1 — Nora and the Handoff That Got Personal</a>
+<a href="#case-2">Case 2 — Vic and the Vendor Tone Spiral</a>
+<a href="#framework">Framework — People/Problem Split Card</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Separating Face from the Coverag</a>
+<a href="#roleplay-strategic">Strategic Role-Play — Cooling a Dock Dispute Wit</a>
+<a href="#key-notes">Key Notes — Naming the Personal Stake Before You</a>
+<a href="#commitment">Commitment — One Named Split Before the Next Esc</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>When Standing Becomes the Issue: What the Evidence Says About Separating People from Problems on the Floor</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>When Standing Becomes the Issue: What the Evidence Says About Separating People from Problems on the Floor</h2>
+<p>Frontline negotiations fail for a reason that rarely shows up on the work order: the people become the problem. A late truck turns into a fight about who was disrespected. A coverage ask turns into a referendum on competence. Once standing and substance fuse, neither gets resolved.</p>
+<h3>Attribution and escalation</h3>
+<p>People explain their own behavior by circumstance and others&#x27; by character — a pattern documented across attribution research (Jones &amp; Nisbett, 1971). On a dock, that means &quot;I held the gate because receiving was flooded&quot; becomes &quot;they&#x27;re being difficult&quot; when the other side does the same thing. The substantive issue (a flooded dock) gets replaced by a character judgment that hardens positions.</p>
+<h3>Face and the side agenda</h3>
+<p>Goffman&#x27;s analysis of face-work shows that protecting public image can become a goal of its own, separate from the original task (Goffman, 1967). A supervisor who feels corrected in front of the crew is now negotiating two agendas: the coverage number and the need not to look weak. Collapsing them into one fight usually means both sides dig in.</p>
+<h3>Constructive conflict needs a split</h3>
+<p>Mary Parker Follett argued that conflict becomes useful only when parties treat disagreement as a shared problem rather than a personal contest (Follett, 1940). Modern negotiation analysis echoes this: parties who deliberately separate interpersonal friction from the issue under discussion reach more durable agreements (Walton &amp; McKersie, 1965; Pruitt, 1981).</p>
+<h3>What frontline leaders can check</h3>
+<p>Three practical markers: (1) the exchange is sharper than the stakes justify; (2) you are defending standing more than the problem; (3) old history is being pulled into a narrow dispute. When any marker appears, name the personal stake out loud and separately, then restate the substantive problem in one plain sentence and address only that.</p>
+<h3>Selected references</h3>
+<ul>
+<li>Follett, M. P. (1940). Constructive conflict. In H. C. Metcalf &amp; L. Urwick (Eds.), <em>Dynamic Administration</em>. Harper &amp; Brothers.</li>
+<li>Goffman, E. (1967). <em>Interaction Ritual</em>. Doubleday.</li>
+<li>Jones, E. E., &amp; Nisbett, R. E. (1971). The actor and the observer. In E. E. Jones et al. (Eds.), <em>Attribution</em>. General Learning Press.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The Radio Call That Was About Me, Not the Delay</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The Radio Call That Was About Me, Not the Delay</h2>
+<p>I almost keyed the radio to prove a point.</p>
+<p>A peer on second shift held an operator I needed for a changeover. The delay was real. So was the tone in my voice when I asked again. By the third exchange I was no longer negotiating for a certified person — I was negotiating for not looking like I&#x27;d been ignored in front of my crew.</p>
+<p>A lead who overheard asked me one question: &quot;Are you fighting the delay or fighting the tone?&quot; That split cooled me enough to call back and say, &quot;The tone landed hard. Separate from that, I still need one certified operator by 14:00 for the changeover — what options do you have?&quot; We found a swap. The delay shrank. My standing recovered because I stopped making it the main issue.</p>
+<p>I still get hooked. The habit that saves me is naming the personal stake out loud before I restate the ask.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — Are You Defending Standing or Solving the Dispute?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Nora and the Handoff That Got Personal</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Nora and the Handoff That Got Personal</h2>
+<p>Nora leads first shift packaging. At handoff, second-shift lead Marco says her crew left the line &quot;a mess again.&quot; Nora hears a competence attack. She answers with a list of everything second shift left unfinished last week. Ten minutes later they are arguing history, not the changeover checklist sitting between them.</p>
+<p>The substantive issue is a missed cleaning step that will delay startup. The personal stake is Nora feeling publicly blamed.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>Where did people and problem fuse?</li>
+<li>What would Nora say to split them?</li>
+<li>What one-sentence substantive problem remains after the split?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — Vic and the Vendor Tone Spiral</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — Vic and the Vendor Tone Spiral</h2>
+<p>Vic supervises receiving. A carrier dispatcher calls about detention. The fee may be valid; the dispatcher&#x27;s tone is sharp. Vic mirrors the tone. Soon neither side is reading the appointment log — they are trading who was &quot;professional.&quot;</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>Which markers of fusion showed up?</li>
+<li>How could Vic acknowledge tone without conceding the fee?</li>
+<li>What objective artifact should re-enter the conversation after the split?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — People/Problem Split Card</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — People/Problem Split Card</h2>
+<p>Use this when a shift, dock, or vendor exchange gets sharper than the stakes.</p>
+<h3>Step 1 — Marker check (any yes = pause)</h3>
+<ul>
+<li>Exchange sharper than stakes?</li>
+<li>Defending standing more than the problem?</li>
+<li>Old history pulled into a narrow issue?</li>
+</ul>
+<h3>Step 2 — Split aloud</h3>
+<ol>
+<li>Personal stake (one sentence): &quot;What&#x27;s landing for me is ___.&quot;</li>
+<li>Substantive problem (one sentence): &quot;Separate from that, the issue is ___.&quot;</li>
+</ol>
+<h3>Step 3 — Address each track</h3>
+<ul>
+<li>Standing: acknowledge or repair without trading the substantive ask.</li>
+<li>Substance: interests, options, criteria — not volume.</li>
+</ul>
+<h3>Step 4 — Close</h3>
+<p>Confirm both tracks got a next step, or name which one is deferred and why.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Separating Face from the Coverage Ask</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Separating Face from the Coverage Ask</h2>
+<p><strong>Setup:</strong> You need one certified operator from a peer&#x27;s crew. Last week they felt you &quot;poached&quot; without asking. They are cold on the radio.</p>
+<p><strong>Your aim:</strong> Separate face/history from the coverage need; get to options.</p>
+<p><strong>Peer aim:</strong> Protect standing; avoid looking like a pushover.</p>
+<p><strong>Debrief:</strong> Did you name the personal stake separately? Did the substantive ask stay clear?</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Cooling a Dock Dispute Without Losing Authority</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Cooling a Dock Dispute Without Losing Authority</h2>
+<p><strong>Roles:</strong> Receiving lead, carrier lead, warehouse manager (observer), quality tech (has appointment log).</p>
+<p><strong>Situation:</strong> Detention dispute + public tone fight on the dock floor with crews watching.</p>
+<p><strong>Success:</strong> People/problem split named; log used; authority preserved without humiliation.</p>
+<p><strong>Debrief:</strong> What nearly collapsed standing and substance again?</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Naming the Personal Stake Before You Fight the Problem</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Naming the Personal Stake Before You Fight the Problem</h2>
+<p><strong>Unit goal:</strong> Notice when ego, tone, or history has fused with a floor dispute, separate that personal stake from the substantive problem, and address each on its own terms.</p>
+<h3>Core ideas</h3>
+<ul>
+<li>Floor fights escalate when standing and substance fuse (Follett, 1940; Goffman, 1967).</li>
+<li>You will explain your behavior by circumstance and theirs by character unless you check it (Jones &amp; Nisbett, 1971).</li>
+<li>Naming the personal stake out loud is not weakness — it clears the table for the real problem.</li>
+<li>Restate the substantive issue in one plain sentence after the split.</li>
+</ul>
+<h3>Frontline checklist</h3>
+<ol>
+<li>Notice when the exchange is sharper than the stakes.</li>
+<li>Ask: am I defending the problem or my standing?</li>
+<li>Write one circumstance-based explanation for the other side you have not checked.</li>
+<li>Name the personal stake separately, then restate the substantive ask.</li>
+<li>Resolve standing and substance on separate tracks if both still matter.</li>
+</ol>
+<h3>Reflection</h3>
+<p>Which recent floor disagreement escalated faster than the issue warranted — and what personal stake was riding underneath?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — One Named Split Before the Next Escalation</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Tactical &amp; Enterprise Negotiation · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tactical Negotiation — Tactical &amp; Enterprise Negotiation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Tactical &amp; Enterprise Negotiation</p>
+      <h1>Tactical Negotiation</h1>
+      <p class="hero-lead">Help frontline leaders dig past opening positions on shift, dock, and vendor disputes to uncover interests and generate more than one workable option.</p>
+      <div class="hero-meta">
+        <span>GTY · U03</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Behind the Number: What the Evidence Says About </a>
+<a href="#opinion">The Overtime Number That Wasn&#x27;t About Hours</a>
+<a href="#assessment">Self-Assessment — Do You Negotiate Positions or </a>
+<a href="#case-1">Case 1 — Priya and the Fixed Headcount Demand</a>
+<a href="#case-2">Case 2 — Omar and the Return-Window Position</a>
+<a href="#framework">Framework — Interest Probe Card</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Surfacing the Interest Behind a </a>
+<a href="#roleplay-strategic">Strategic Role-Play — Turning Two Positions into</a>
+<a href="#key-notes">Key Notes — Asking Why Before You Counter</a>
+<a href="#commitment">Commitment — Two Probes Before the Counter-Offer</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Behind the Number: What the Evidence Says About Interests Hiding in Floor Positions</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Behind the Number: What the Evidence Says About Interests Hiding in Floor Positions</h2>
+<p>A stated position is a demand. An interest is the need the demand is trying to protect. Frontline leaders who only counter numbers stay stuck; leaders who ask what the number is for open room to move.</p>
+<h3>Positions vs interests</h3>
+<p>Fisher and Ury&#x27;s popular framing is widely known, but the underlying research tradition is older: integrative bargainers who focus on underlying needs outperform pure distributive tactics (Walton &amp; McKersie, 1965; Pruitt, 1981). On a floor, &quot;I need four people&quot; may protect training continuity, a promised break pattern, or fear of missing a ship window — none of which appear in the number.</p>
+<h3>Questions that surface interests</h3>
+<p>Targeted questions — why this matters, what problem it solves, what happens if unmet — reliably increase information exchange and option generation (Pruitt, 1981; Thompson, 1991). Supervisors who ask before countering spend less time in deadlocked restatement.</p>
+<h3>Multiple options beat a single counter</h3>
+<p>Once interests are named, generating two or more packages that could satisfy both sides improves settlement quality (Pruitt, 1981). A single counter-position restarts the distributive fight.</p>
+<h3>Floor application</h3>
+<p>Before restating your ask: write the other side&#x27;s position, guess the interest, ask one probe, then sketch two options. Re-check your walk-away if the talk stalls (Sebenius, 1992).</p>
+<h3>Selected references</h3>
+<ul>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Sebenius, J. K. (1992). Negotiation analysis: A characterization and review. <em>Management Science, 38</em>(1), 18–38.</li>
+<li>Thompson, L. (1991). Information exchange in negotiation. <em>Journal of Experimental Social Psychology, 27</em>(2), 161–179.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The Overtime Number That Wasn&#x27;t About Hours</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The Overtime Number That Wasn&#x27;t About Hours</h2>
+<p>A peer insisted on &quot;no OT past 18:00 — period.&quot; I counter-offered 19:00. We stalled.</p>
+<p>When I finally asked what 18:00 protected, the answer was childcare pickup, not cost. We built a split crew: two stayed to 19:30 with Saturday flex; the rest left on time. Same ship window. Different interest.</p>
+<p>I wasted twenty minutes treating a schedule as a number fight. The probe should have been first.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — Do You Negotiate Positions or Interests?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Priya and the Fixed Headcount Demand</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Priya and the Fixed Headcount Demand</h2>
+<p>Priya needs two temps for a surge. The agency contact holds at &quot;minimum four or nothing.&quot; Priya counters with two. Deadlock.</p>
+<p>Interest behind four: the agency&#x27;s dispatch already scheduled a van for four and will eat cost otherwise. Options: Priya takes four for two days and releases early; or shares two with a sister line.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>What probe surfaces the van constraint?</li>
+<li>Which option protects both interests?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — Omar and the Return-Window Position</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — Omar and the Return-Window Position</h2>
+<p>A vendor says &quot;returns only within 24 hours.&quot; Omar needs 72 for quality hold. Both restate.</p>
+<p>Interest behind 24: inventory turns and shelf space. Interest behind 72: defect confirmation. Options: 48 with photo evidence; or 72 for safety-critical SKUs only.</p>
+<h3>Discussion prompts</h3>
+<ol>
+<li>Positions vs interests?</li>
+<li>Design a third option neither stated first.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — Interest Probe Card</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — Interest Probe Card</h2>
+<h3>1. Capture positions</h3>
+<ul>
+<li>Their ask:</li>
+<li>My ask:</li>
+</ul>
+<h3>2. Probe (pick one)</h3>
+<ul>
+<li>Why is that important right now?</li>
+<li>What does that solve for you?</li>
+<li>What happens if we can&#x27;t do that?</li>
+</ul>
+<h3>3. Name interests</h3>
+<ul>
+<li>Theirs:</li>
+<li>Mine:</li>
+</ul>
+<h3>4. Options (minimum two)</h3>
+<p>1.</p>
+<p>2.</p>
+<h3>5. Choose and check walk-away</h3>
+<p>If none work, state BATNA and pause — don&#x27;t invent a third false position.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Surfacing the Interest Behind a Hard No</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Surfacing the Interest Behind a Hard No</h2>
+<p><strong>Setup:</strong> Peer refuses to release a forklift &quot;until Friday.&quot; You need it tomorrow for a backlog.</p>
+<p><strong>Aim:</strong> One probe, named interests, two options before any counter-number.</p>
+<p><strong>Debrief:</strong> Did you ask before countering?</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Turning Two Positions into Three Options</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Turning Two Positions into Three Options</h2>
+<p><strong>Roles:</strong> Line lead, planner, materials lead, observer.</p>
+<p><strong>Situation:</strong> Planner holds a freeze date; line needs an exception for a customer pull-in.</p>
+<p><strong>Success:</strong> Interests named; three options on whiteboard; one selected with a checkable standard.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Asking Why Before You Counter</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Asking Why Before You Counter</h2>
+<p><strong>Unit goal:</strong> Dig past opening positions to uncover interests and generate more than one workable option.</p>
+<h3>Core ideas</h3>
+<ul>
+<li>Positions are demands; interests are needs (Pruitt, 1981).</li>
+<li>Ask why / what it solves before you counter.</li>
+<li>Two options beat one counter-position.</li>
+<li>Log which interest actually unlocked the deal.</li>
+</ul>
+<h3>Frontline checklist</h3>
+<ol>
+<li>Write both positions in one line each.</li>
+<li>Guess the interest behind each.</li>
+<li>Ask one probe before restating your number.</li>
+<li>Sketch two mutual-gain options.</li>
+<li>Only then propose.</li>
+</ol>
+<h3>Reflection</h3>
+<p>Where did you last counter a number without asking what it protected?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — Two Probes Before the Counter-Offer</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Tactical &amp; Enterprise Negotiation · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

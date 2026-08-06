@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negociación táctica — Negociación táctica y empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Negociación táctica y empresarial</p>
+      <h1>Negociación táctica</h1>
+      <p class="hero-lead">Ayudar a los líderes de primera línea a notar cuándo el ego, el tono o una historia vieja se ha fusionado con una disputa de turno o andén, separar esa apuesta personal del problema de fondo, y abordar cada uno en sus propios términos para que la negociación pueda avanzar de nuevo.</p>
+      <div class="hero-meta">
+        <span>GTY · U02</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Cuando el prestigio se vuelve el asunto: qué dic</a>
+<a href="#opinion">La llamada de radio que era sobre mí, no sobre e</a>
+<a href="#assessment">Autodiagnóstico — ¿Defiendes tu prestigio o resu</a>
+<a href="#case-1">Caso 1 — Nora y el relevo que se volvió personal</a>
+<a href="#case-2">Caso 2 — Vic y la espiral de tono con el proveed</a>
+<a href="#framework">Marco — Tarjeta de separación personas/problema</a>
+<a href="#roleplay-1v1">Role-play 1:1 — Separar la cara del pedido de co</a>
+<a href="#roleplay-strategic">Role-play estratégico — Enfriar una disputa de a</a>
+<a href="#key-notes">Puntos clave — Nombrar la apuesta personal antes</a>
+<a href="#commitment">Compromiso — Una separación nombrada antes de la</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Cuando el prestigio se vuelve el asunto: qué dice la evidencia sobre separar a las personas del problema en el piso</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Cuando el prestigio se vuelve el asunto: qué dice la evidencia sobre separar a las personas del problema en el piso</h2>
+<p>Las negociaciones de primera línea fallan por una razón que rara vez aparece en la orden de trabajo: las personas se vuelven el problema. Un camión atrasado se convierte en una pelea sobre quién fue irrespetado. Un pedido de cobertura se convierte en un referéndum sobre la competencia. Una vez que el prestigio y el fondo se fusionan, ninguno se resuelve.</p>
+<h3>Atribución y escalada</h3>
+<p>Las personas explican su propio comportamiento por las circunstancias y el de los demás por el carácter — un patrón documentado en la investigación sobre atribución (Jones &amp; Nisbett, 1971). En un andén, eso significa que &quot;retuve la puerta porque recepción estaba inundada&quot; se convierte en &quot;están siendo difíciles&quot; cuando el otro lado hace lo mismo. El asunto de fondo (un andén inundado) se reemplaza por un juicio de carácter que endurece las posiciones.</p>
+<h3>La cara y la agenda paralela</h3>
+<p>El análisis de Goffman sobre el trabajo de imagen muestra que proteger la imagen pública puede volverse un objetivo por sí mismo, separado de la tarea original (Goffman, 1967). Un supervisor que se siente corregido frente a la cuadrilla ahora negocia dos agendas: el número de cobertura y la necesidad de no parecer débil. Colapsarlas en una sola pelea suele significar que ambos lados se atrincheran.</p>
+<h3>El conflicto constructivo necesita una separación</h3>
+<p>Mary Parker Follett argumentó que el conflicto se vuelve útil solo cuando las partes tratan el desacuerdo como un problema compartido y no como un concurso personal (Follett, 1940). El análisis moderno de la negociación lo confirma: las partes que separan deliberadamente la fricción interpersonal del asunto en discusión llegan a acuerdos más duraderos (Walton &amp; McKersie, 1965; Pruitt, 1981).</p>
+<h3>Qué pueden revisar los líderes de primera línea</h3>
+<p>Tres marcadores prácticos: (1) el intercambio es más agudo de lo que justifican las apuestas; (2) estás defendiendo el prestigio más que el problema; (3) se está metiendo historia vieja en una disputa estrecha. Cuando aparece cualquiera, nombra la apuesta personal en voz alta y por separado, luego reafirma el problema de fondo en una oración sencilla y aborda solo eso.</p>
+<h3>Referencias seleccionadas</h3>
+<ul>
+<li>Follett, M. P. (1940). Constructive conflict. In H. C. Metcalf &amp; L. Urwick (Eds.), <em>Dynamic Administration</em>. Harper &amp; Brothers.</li>
+<li>Goffman, E. (1967). <em>Interaction Ritual</em>. Doubleday.</li>
+<li>Jones, E. E., &amp; Nisbett, R. E. (1971). The actor and the observer. In E. E. Jones et al. (Eds.), <em>Attribution</em>. General Learning Press.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>La llamada de radio que era sobre mí, no sobre el retraso</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>La llamada de radio que era sobre mí, no sobre el retraso</h2>
+<p>Casi apreté el botón de la radio para demostrar un punto.</p>
+<p>Un par del segundo turno retuvo a un operador que yo necesitaba para un cambio de producto. El retraso era real. También lo era el tono de mi voz cuando pedí de nuevo. En el tercer intercambio ya no negociaba por una persona certificada — negociaba por no parecer que me habían ignorado frente a mi cuadrilla.</p>
+<p>Un lead que escuchó me hizo una sola pregunta: &quot;¿Estás peleando el retraso o peleando el tono?&quot; Esa separación me enfrió lo suficiente para volver a llamar y decir: &quot;El tono pegó duro. Separado de eso, todavía necesito un operador certificado para las 14:00 por el cambio de producto — ¿qué opciones tienes?&quot; Encontramos un intercambio. El retraso se achicó. Mi prestigio se recuperó porque dejé de convertirlo en el asunto principal.</p>
+<p>Todavía me engancho. El hábito que me salva es nombrar la apuesta personal en voz alta antes de reafirmar el pedido.</p>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Autodiagnóstico — ¿Defiendes tu prestigio o resuelves la disputa?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Este diagnóstico se abrirá en <strong>Google Forms</strong> para que tus respuestas se mantengan privadas y recibas tu perfil al enviar — no dentro de esta página.</p><p class="gate-note">Las preguntas y el puntaje viven en el formulario. Aquí aún no hay nada que completar.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Caso 1 — Nora y el relevo que se volvió personal</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 1 — Nora y el relevo que se volvió personal</h2>
+<p>Nora lidera el empaque del primer turno. En el relevo, el lead del segundo turno, Marco, dice que su cuadrilla dejó la línea &quot;otra vez hecha un desastre.&quot; Nora escucha un ataque a su competencia. Responde con una lista de todo lo que el segundo turno dejó sin terminar la semana pasada. Diez minutos después están discutiendo historia, no la lista de cambio de producto que tienen entre ellos.</p>
+<p>El asunto de fondo es un paso de limpieza omitido que retrasará el arranque. La apuesta personal es que Nora se siente culpada en público.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Dónde se fusionaron las personas y el problema?</li>
+<li>¿Qué diría Nora para separarlos?</li>
+<li>¿Qué problema de fondo en una oración queda después de la separación?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Caso 2 — Vic y la espiral de tono con el proveedor</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 2 — Vic y la espiral de tono con el proveedor</h2>
+<p>Vic supervisa recepción. Un despachador de transportista llama por detención. El cargo puede ser válido; el tono del despachador es cortante. Vic refleja el tono. Pronto ninguno está leyendo el registro de citas — están intercambiando quién fue &quot;profesional.&quot;</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Qué marcadores de fusión aparecieron?</li>
+<li>¿Cómo podría Vic reconocer el tono sin ceder el cargo?</li>
+<li>¿Qué artefacto objetivo debería volver a la conversación después de la separación?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Marco — Tarjeta de separación personas/problema</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Marco — Tarjeta de separación personas/problema</h2>
+<p>Úsala cuando un intercambio de turno, andén o proveedor se vuelve más agudo de lo que justifican las apuestas.</p>
+<h3>Paso 1 — Revisión de marcadores (cualquier sí = pausa)</h3>
+<ul>
+<li>¿Intercambio más agudo que las apuestas?</li>
+<li>¿Defendiendo el prestigio más que el problema?</li>
+<li>¿Historia vieja metida en un asunto estrecho?</li>
+</ul>
+<h3>Paso 2 — Separar en voz alta</h3>
+<ol>
+<li>Apuesta personal (una oración): &quot;Lo que me está pegando es ___.&quot;</li>
+<li>Problema de fondo (una oración): &quot;Separado de eso, el asunto es ___.&quot;</li>
+</ol>
+<h3>Paso 3 — Abordar cada pista</h3>
+<ul>
+<li>Prestigio: reconoce o repara sin intercambiar el pedido de fondo.</li>
+<li>Fondo: intereses, opciones, criterios — no volumen.</li>
+</ul>
+<h3>Paso 4 — Cerrar</h3>
+<p>Confirma que ambas pistas tienen un siguiente paso, o nombra cuál se aplaza y por qué.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-play 1:1 — Separar la cara del pedido de cobertura</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play 1:1 — Separar la cara del pedido de cobertura</h2>
+<p><strong>Preparación:</strong> Necesitas un operador certificado de la cuadrilla de un par. La semana pasada sintieron que lo &quot;robaste&quot; sin pedir. Están fríos en la radio.</p>
+<p><strong>Tu objetivo:</strong> Separar la cara/historia de la necesidad de cobertura; llegar a opciones.</p>
+<p><strong>Objetivo del par:</strong> Proteger el prestigio; evitar parecer alguien a quien se puede pisotear.</p>
+<p><strong>Debrief:</strong> ¿Nombraste la apuesta personal por separado? ¿El pedido de fondo se mantuvo claro?</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Role-play estratégico — Enfriar una disputa de andén sin perder autoridad</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play estratégico — Enfriar una disputa de andén sin perder autoridad</h2>
+<p><strong>Roles:</strong> Lead de recepción, lead del transportista, gerente de almacén (observador), técnico de calidad (tiene el registro de citas).</p>
+<p><strong>Situación:</strong> Disputa de detención + pelea pública de tono en el piso del andén con las cuadrillas mirando.</p>
+<p><strong>Éxito:</strong> Separación personas/problema nombrada; registro usado; autoridad preservada sin humillación.</p>
+<p><strong>Debrief:</strong> ¿Qué casi volvió a colapsar prestigio y fondo?</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Puntos clave — Nombrar la apuesta personal antes de pelear el problema</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Puntos clave — Nombrar la apuesta personal antes de pelear el problema</h2>
+<p><strong>Objetivo de la unidad:</strong> Notar cuándo el ego, el tono o la historia se ha fusionado con una disputa de piso, separar esa apuesta personal del problema de fondo, y abordar cada uno en sus propios términos.</p>
+<h3>Ideas centrales</h3>
+<ul>
+<li>Las peleas de piso escalan cuando el prestigio y el fondo se fusionan (Follett, 1940; Goffman, 1967).</li>
+<li>Explicarás tu comportamiento por las circunstancias y el de ellos por el carácter a menos que lo revises (Jones &amp; Nisbett, 1971).</li>
+<li>Nombrar la apuesta personal en voz alta no es debilidad — limpia la mesa para el problema real.</li>
+<li>Reafirma el asunto de fondo en una oración sencilla después de la separación.</li>
+</ul>
+<h3>Lista de verificación de primera línea</h3>
+<ol>
+<li>Nota cuándo el intercambio es más agudo de lo que justifican las apuestas.</li>
+<li>Pregunta: ¿estoy defendiendo el problema o mi prestigio?</li>
+<li>Escribe una explicación basada en circunstancias para el otro lado que aún no has verificado.</li>
+<li>Nombra la apuesta personal por separado, luego reafirma el pedido de fondo.</li>
+<li>Resuelve prestigio y fondo en pistas separadas si ambos siguen importando.</li>
+</ol>
+<h3>Reflexión</h3>
+<p>¿Qué desacuerdo reciente de piso escaló más rápido de lo que el asunto merecía — y qué apuesta personal iba debajo?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Compromiso — Una separación nombrada antes de la próxima escalada</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Tu plan de compromiso se abrirá en <strong>Google Forms</strong> para que puedas enviarlo y guardar un registro — no como campos rellenables en esta página.</p><p class="gate-note">Nada que completar aquí hasta que el enlace del formulario esté listo.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Negociación táctica y empresarial · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

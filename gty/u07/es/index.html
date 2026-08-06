@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negociación táctica — Negociación táctica y empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Negociación táctica y empresarial</p>
+      <h1>Negociación táctica</h1>
+      <p class="hero-lead">Ayudar a los líderes de primera línea a recuperar confrontaciones posicionales estancadas y convertirlas en diálogo fundamentado en intereses con pares y proveedores, sin fingir que la pelea nunca ocurrió.</p>
+      <div class="hero-meta">
+        <span>GTY · U07</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Del punto muerto al diálogo: qué dice la evidenc</a>
+<a href="#opinion">La discusión que reinicié en lugar de repetir</a>
+<a href="#assessment">Autodiagnóstico — ¿Puedes reiniciar una negociac</a>
+<a href="#case-1">Caso 1 — Dos líderes, un flotante compartido, ce</a>
+<a href="#case-2">Caso 2 — La llamada con el proveedor que necesit</a>
+<a href="#framework">Marco — Guion de reinicio del punto muerto</a>
+<a href="#roleplay-1v1">Role-play 1:1 — Reiniciar después de que ambos l</a>
+<a href="#roleplay-strategic">Role-play estratégico — Sacar a una sala del mod</a>
+<a href="#key-notes">Puntos clave — Reiniciar una pelea posicional a </a>
+<a href="#commitment">Compromiso — Una frase de reinicio lista</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Del punto muerto al diálogo: qué dice la evidencia sobre recuperar negociaciones de piso estancadas</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Del punto muerto al diálogo: qué dice la evidencia sobre recuperar negociaciones de piso estancadas</h2>
+<p>A veces el fracaso no es la preparación — es que ambos lados ya están atrincherados. Las habilidades de recuperación importan tanto como las de apertura.</p>
+<h3>Dinámica del punto muerto</h3>
+<p>La escalada posicional aumenta el compromiso con una postura pública, haciendo que ceder cueste imagen (Brockner &amp; Rubin, 1985). En el piso, eso se ve como repetir el mismo número más fuerte mientras las cuadrillas observan.</p>
+<h3>Cambiar el juego a mitad de camino</h3>
+<p>La investigación sobre renegociación e intervención de proceso sugiere que las partes pueden reiniciar cambiando el marco conversacional: separar a las personas del problema, hacer preguntas de interés, inventar opciones e introducir estándares (Walton &amp; McKersie, 1965; Pruitt, 1981; Raiffa, 1982). La clave es un reinicio explícito, no una esperanza silenciosa de que el otro lado se ablande.</p>
+<h3>Jiu-jitsu de negociación (lectura práctica)</h3>
+<p>Cuando el otro lado empuja una posición, evita contraempujar. Haz preguntas, invita a criticar tus ideas y reencuadra los ataques hacia ti como ataques al problema (un conjunto de tácticas popularizado en la literatura práctica y coherente con el consejo de proceso integrativo en Pruitt, 1981).</p>
+<h3>Reinicio de piso</h3>
+<p>Un guion usable: &quot;Estamos atascados repitiendo números. Quiero reiniciar — interés, opciones, estándar — empezando por lo que esto protege para ti.&quot; Luego cállate y escucha.</p>
+<h3>Referencias seleccionadas</h3>
+<ul>
+<li>Brockner, J., &amp; Rubin, J. Z. (1985). <em>Entrapment in Escalating Conflicts</em>. Springer.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Raiffa, H. (1982). <em>The Art and Science of Negotiation</em>. Harvard University Press.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>La discusión que reinicié en lugar de repetir</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>La discusión que reinicié en lugar de repetir</h2>
+<p>Un proveedor y yo ya habíamos quemado quince minutos. Las mismas dos oraciones. Sentí a la cuadrilla observando.</p>
+<p>Dije: &quot;No estamos avanzando. Quiero reiniciar — no reargumentar. ¿Qué protege la tarifa para ti de tu lado?&quot; Silencio, luego una respuesta sobre una métrica del despachador. Armamos una excepción con evidencia fotográfica. Las mismas personas. Proceso distinto.</p>
+<p>El reinicio se sintió incómodo. Incómodo le ganó a otra vuelta.</p>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Autodiagnóstico — ¿Puedes reiniciar una negociación estancada?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Este diagnóstico se abrirá en <strong>Google Forms</strong> para que tus respuestas se mantengan privadas y recibas tu perfil al enviar — no dentro de esta página.</p><p class="gate-note">Las preguntas y el puntaje viven en el formulario. Aquí aún no hay nada que completar.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Caso 1 — Dos líderes, un flotante compartido, cero movimiento</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 1 — Dos líderes, un flotante compartido, cero movimiento</h2>
+<p>Ambos líderes reclaman el flotante &quot;todo el día.&quot; Tercera repetición. La cuadrilla espera.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>Escribe un guion de reinicio.</li>
+<li>¿Qué opciones aparecen después de los intereses?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Caso 2 — La llamada con el proveedor que necesitaba un reinicio</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 2 — La llamada con el proveedor que necesitaba un reinicio</h2>
+<p>Disputa de factura; ambos lados leen fragmentos del contrato de forma competitiva.</p>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Cuándo es apropiado reiniciar vs. escalar al gerente?</li>
+<li>¿Cómo introducir el contrato completo como estándar a mitad de la llamada?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Marco — Guion de reinicio del punto muerto</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Marco — Guion de reinicio del punto muerto</h2>
+<p><strong>Cuándo:</strong> Las mismas posiciones repetidas ≥2 veces con calor creciente.</p>
+<p><strong>Di:</strong></p>
+<ol>
+<li>&quot;Estamos atascados reafirmando posiciones.&quot;</li>
+<li>&quot;Quiero reiniciar el proceso, no anotar una victoria.&quot;</li>
+<li>&quot;¿Qué protege tu posición para ti?&quot;</li>
+<li>&quot;Esto es lo que la mía protege para mí.&quot;</li>
+<li>&quot;Listemos dos opciones que podrían cubrir ambas.&quot;</li>
+<li>&quot;¿Qué estándar deberíamos usar para elegir?&quot;</li>
+</ol>
+<p><strong>No hagas:</strong> Relitigar el historial de tono en el mismo aliento que el reinicio (sepáralo primero si hace falta).</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-play 1:1 — Reiniciar después de que ambos lados se atrincheraron</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play 1:1 — Reiniciar después de que ambos lados se atrincheraron</h2>
+<p><strong>Escenario:</strong> Tú y un par ya han discutido la cobertura durante cinco minutos.</p>
+<p><strong>Objetivo:</strong> Entregar el guion de reinicio; llegar a dos opciones.</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Role-play estratégico — Sacar a una sala del modo posicional</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play estratégico — Sacar a una sala del modo posicional</h2>
+<p><strong>Roles:</strong> Dos supervisores a mitad de pelea, gerente facilitador, observador.</p>
+<p><strong>Éxito:</strong> El facilitador o un supervisor logra un reinicio; la sala pasa a intereses/opciones.</p></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Puntos clave — Reiniciar una pelea posicional a mitad de camino</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Puntos clave — Reiniciar una pelea posicional a mitad de camino</h2>
+<p><strong>Objetivo de la unidad:</strong> Recuperar confrontaciones posicionales estancadas y convertirlas en diálogo basado en intereses.</p>
+<h3>Ideas centrales</h3>
+<ul>
+<li>El compromiso público profundiza el punto muerto (Brockner &amp; Rubin, 1985).</li>
+<li>Reinicio explícito &gt; esperar a que se ablanden.</li>
+<li>No contraempujes; pregunta y reencuadra (Pruitt, 1981).</li>
+<li>Lleva la secuencia completa: personas/problema → intereses → opciones → criterios → BATNA.</li>
+</ul>
+<h3>Lista de verificación</h3>
+<ol>
+<li>Nombra el patrón de estancamiento en voz alta.</li>
+<li>Propón un marco de reinicio.</li>
+<li>Haz una pregunta de interés.</li>
+<li>Inventa dos opciones.</li>
+<li>Ancla a un estándar; conoce tu salida.</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Compromiso — Una frase de reinicio lista</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Tu plan de compromiso se abrirá en <strong>Google Forms</strong> para que puedas enviarlo y guardar un registro — no como campos rellenables en esta página.</p><p class="gate-note">Nada que completar aquí hasta que el enlace del formulario esté listo.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Negociación táctica y empresarial · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>
