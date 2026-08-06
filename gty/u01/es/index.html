@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Negociación táctica — Negociación táctica y empresarial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Negociación táctica y empresarial</p>
+      <h1>Negociación táctica</h1>
+      <p class="hero-lead">Ayudar a los líderes de primera línea a diagnosticar a tiempo la negociación posicional en disputas de turno, andén y proveedores, separar a las personas del problema, y llevar una negociación estancada a través de intereses, opciones y criterios objetivos hacia un acuerdo respaldado por un BATNA real.</p>
+      <div class="hero-meta">
+        <span>GTY · U01</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Las posiciones cuestan más de lo que ahorran: qu</a>
+<a href="#opinion">El cargo por detención que casi me negué a discu</a>
+<a href="#assessment">Autodiagnóstico — ¿Negocias posiciones o resuelv</a>
+<a href="#case-1">Caso 1 — Teo y el punto muerto por la ventana de</a>
+<a href="#case-2">Caso 2 — Dana y el intercambio de cobertura del </a>
+<a href="#framework">Marco — Mapa de intereses: de la posición al BAT</a>
+<a href="#roleplay-1v1">Role-play 1:1 — Negociar el turno del fin de sem</a>
+<a href="#roleplay-strategic">Role-play estratégico — Resolver el punto muerto</a>
+<a href="#key-notes">Puntos clave — Cambiar posiciones por intereses </a>
+<a href="#commitment">Compromiso — Proteger la verificación de interes</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Las posiciones cuestan más de lo que ahorran: qué dice la evidencia sobre los quiebres de negociación en el piso</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Las posiciones cuestan más de lo que ahorran: qué dice la evidencia sobre los quiebres de negociación en el piso</h2>
+<p>Los líderes de primera línea negocian constantemente, incluso cuando nadie lo llama así. Un jefe de turno que intercambia personal con un par, un supervisor de andén que rechaza una factura de detención de un proveedor, un jefe de línea que defiende una ventana de mantenimiento frente a un programador — cada uno es una negociación, y cada una puede colapsar en negociación posicional sin que nadie lo nombre.</p>
+<h3>Dos números fijos, uno frente al otro</h3>
+<p>La negociación posicional aparece en el piso como dos números declarados, uno frente al otro: &quot;No vamos a pagar el cargo&quot; contra &quot;El contrato dice que lo debes.&quot; &quot;Necesito que me devuelvan a mis cuatro personas&quot; contra &quot;No puedo liberar a nadie antes del domingo.&quot; Una vez que ambas partes plantan una posición, la conversación deja de ser sobre el problema de fondo y pasa a ser sobre quién cede primero. La investigación conductual temprana sobre negociación laboral distinguió entre tácticas distributivas, donde cada parte intenta reclamar una porción mayor de un pastel fijo, y tácticas integrativas, donde las partes amplían conjuntamente lo disponible antes de dividirlo (Walton &amp; McKersie, 1965). La negociación posicional en un piso de turno tiende por defecto a lo distributivo: trata un problema compartido — un camión atrasado, una cuadrilla corta, un defecto que cruza dos líneas — como un pastel fijo para repartir, en lugar de un problema conjunto para resolver.</p>
+<h3>Separar a las personas del problema</h3>
+<p>Un desacuerdo suele escalar no porque el asunto de fondo sea insoluble, sino porque las personas involucradas se enredan en él. Los escritos de Mary Parker Follett sobre el conflicto constructivo enmarcaron el desacuerdo como un recurso más que como un fracaso, siempre que las partes separen la fricción personal — el tono, la historia, el ego — del problema real sobre la mesa (Follett, 1940). Un supervisor de andén que se siente irrespetado por el tono de un proveedor está negociando dos cosas a la vez: la factura y el irrespeto. Colapsarlas en una sola pelea suele significar que ninguna se resuelve.</p>
+<h3>Los intereses escondidos detrás de las posiciones</h3>
+<p>Una vez separadas las personas del problema, la siguiente pregunta es qué necesita realmente cada parte, no qué está diciendo en este momento. La investigación de Pruitt sobre el comportamiento de negociación encontró que los negociadores que generan múltiples opciones ligadas a necesidades de fondo — en lugar de defender un solo número — llegan a acuerdos que ambas partes califican como más justos y duraderos (Pruitt, 1981). En el piso, esto significa preguntar por qué un proveedor está peleando una ventana de devolución, no solo si aceptará o no; preguntar por qué un par no libera a un operador certificado, no solo si lo hará o no.</p>
+<h3>Anclar a algo fuera de la discusión</h3>
+<p>El trabajo de Raiffa sobre análisis de negociación agrega una pieza estructural: las partes que anclan un acuerdo a un estándar externo y verificable — un tiempo de entrega publicado, una tarifa de referencia, una norma de seguridad documentada — llegan a un acuerdo más rápido y con menos resentimiento residual que las partes que simplemente dividen la diferencia entre dos exigencias (Raiffa, 1982). Una disputa de andén anclada a lo que realmente dice la ventana de recepción establecida en el contrato se mueve de forma distinta a una anclada a quién repite su número con más fuerza.</p>
+<h3>Por qué tu BATNA cambia cómo argumentas</h3>
+<p>La pieza final es saber qué pasa si no se llega a un acuerdo. El concepto de nivel de comparación de alternativas, formalizado después dentro de un análisis de negociación más amplio, muestra que la disposición a sostener una posición depende menos de la posición misma que de la calidad de la alternativa de retirada detrás de ella (Kelley &amp; Thibaut, 1978; Sebenius, 1992). Un supervisor que no ha construido una alternativa real frente a un proveedor o un par se aferrará demasiado a una posición, porque esa posición está sustituyendo un plan que nunca armó.</p>
+<h3>Qué significa esto para los líderes de primera línea</h3>
+<p>La secuencia diagnóstica es consistente en toda esta literatura: notar cuándo una disputa de piso se ha endurecido en dos posiciones fijas, separar la fricción interpersonal del problema de fondo, sacar a la luz los intereses detrás de cada posición, generar más de una opción que pueda satisfacerlos, anclar cualquier acuerdo a un estándar objetivo, y conocer tu alternativa de retirada antes de que empiece la conversación. Ninguno de estos pasos requiere una sala de juntas. Se aplican tan directamente a una oficina de andén y a una llamada de radio en cambio de turno como a cualquier negociación que esta investigación buscó describir.</p>
+<h3>Referencias seleccionadas</h3>
+<ul>
+<li>Follett, M. P. (1940). Constructive conflict. In H. C. Metcalf &amp; L. Urwick (Eds.), <em>Dynamic Administration: The Collected Papers of Mary Parker Follett</em>. Harper &amp; Brothers.</li>
+<li>Kelley, H. H., &amp; Thibaut, J. W. (1978). <em>Interpersonal Relations: A Theory of Interdependence</em>. Wiley.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Raiffa, H. (1982). <em>The Art and Science of Negotiation</em>. Harvard University Press.</li>
+<li>Sebenius, J. K. (1992). Negotiation analysis: A characterization and review. <em>Management Science, 38</em>(1), 18–38.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>El cargo por detención que casi me negué a discutir</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>El cargo por detención que casi me negué a discutir</h2>
+<p>Le dije a un despachador de un proveedor, de forma tajante, que no íbamos a pagar un cargo de detención de cuatrocientos dólares por un camión que esperó dos horas extra en nuestro andén. Esa fue toda mi posición. La había decidido antes de que él terminara de explicar por qué el cargo aparecía en la factura.</p>
+<p>Él respondió con la misma firmeza: el contrato cubre la detención después de una ventana de gracia de treinta minutos, y nuestra cuadrilla de andén retuvo el camión noventa minutos más allá de eso. Dos posiciones, dos ultimátums, ningún movimiento. Pasamos quince minutos repitiendo los mismos dos números, y podía sentir que la llamada se deslizaba hacia &quot;pónganlo por escrito y que los gerentes de cuenta lo resuelvan&quot; — lo que normalmente significa que la relación se daña mucho antes de que la factura se resuelva.</p>
+<p>Lo que me detuvo fue una pregunta de mi propio jefe de andén, parado a mi lado: &quot;¿Por qué el camión realmente esperó dos horas?&quot; No tenía una buena respuesta. Revisé el registro de recepción mientras el despachador esperaba en la línea, y resultó que nuestra cuadrilla de noche había estado corta de dos personas, y el camión había quedado en fila detrás de otros tres sin ningún cambio en el programa. Eso no era un problema que él debiera asumir, y tampoco era completamente nuestro — era un vacío de programación que ninguno de los dos había nombrado en voz alta.</p>
+<p>Entonces dejé de defender el número y hice una pregunta distinta: qué evitaría esto realmente el próximo mes, desde su lado. Resultó que su interés real no eran los cuatrocientos dólares — a su equipo de despacho lo miden por los tiempos de retorno puntuales, y un camión detenido dos horas en nuestro andén arrastra hacia abajo un número que sigue a su conductor hasta la siguiente parada. Mi interés real tampoco era el dinero — era no tener un camión bloqueando nuestra única bahía de recepción durante un turno con poco personal.</p>
+<p>No dividimos el cargo. Acordamos algo que ninguno tenía sobre la mesa cuando empezó la llamada: una ventana de cita fija para sus camiones en nuestros días con poco personal, y a cambio, nosotros absorberíamos la detención esta vez, como el costo de no haber señalado antes el vacío de personal. Verifiqué eso contra lo que realmente sabía que era mi alternativa — cambiar de transportista con poco aviso habría costado más en flete expreso que el cargo mismo — así que no estaba cediendo una ventaja que no tenía.</p>
+<p>Antes pensaba que sostener la línea en un número era lo mismo que proteger los intereses de mi andén. No lo es. El número nunca fue el verdadero problema. El problema era un vacío de personal y una métrica que yo no sabía que él cargaba. Ahora, antes de repetir una posición dos veces, pregunto qué está impulsando realmente el número del otro lado, y me obligo a responder qué impulsa el mío. Eso cuesta unos cinco minutos. Atrincherarse por una hora y perder la relación de todos modos cuesta mucho más.</p>
+<p class="article-signature">Curaduría de {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Autodiagnóstico — ¿Negocias posiciones o resuelves el problema real?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Este diagnóstico se abrirá en <strong>Google Forms</strong> para que tus respuestas se mantengan privadas y recibas tu perfil al enviar — no dentro de esta página.</p><p class="gate-note">Las preguntas y el puntaje viven en el formulario. Aquí aún no hay nada que completar.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Caso 1 — Teo y el punto muerto por la ventana de devolución</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 1 — Teo y el punto muerto por la ventana de devolución</h2>
+<h3>Apertura</h3>
+<p>Teo dirige la recepción en un andén de distribución regional. Ha señalado pallets dañados del mismo proveedor tres veces este mes, y cada vez el proceso de devolución y crédito ha retrasado el reabastecimiento varios días. Sabe que tiende a abrir con firmeza cuando cree que un proveedor está recortando costos indebidamente.</p>
+<h3>Contexto</h3>
+<p>En la llamada de esta semana, Teo abre con una posición tajante: rechazar el envío, crédito completo, sin discusión. La representante de cuenta del proveedor, Priya, responde con la misma firmeza — su empaque cumple con la especificación acordada, y cualquier daño ocurrió del lado del andén después de la entrega. Ambos repiten su número en dos llamadas sin ningún movimiento. La próxima entrega es en dos días, y el gerente de almacén de Teo quiere una resolución antes de eso, no otra disputa abierta.</p>
+<p>Ninguno de los dos le ha hecho al otro una pregunta real. Teo asume que la empresa de Priya envía empaques baratos para ahorrar costos. Priya asume que la cuadrilla de Teo maneja los pallets con brusquedad y usa reclamos de daño para negociar descuentos. Un miembro más nuevo de la cuadrilla de Teo menciona, casi de paso, que el daño parece concentrarse en pallets cargados en una posición específica dentro del remolque — un detalle que nadie ha preguntado porque nadie ha dejado de defender su posición.</p>
+<h3>Punto de decisión</h3>
+<p>Teo puede:</p>
+<ol>
+<li>Sostener su posición, rechazar el envío otra vez, y dejar que los equipos de cuenta lo resuelvan a través del proceso formal de reclamos.</li>
+<li>Proponer una llamada de quince minutos con Priya enfocada solo en dónde se cargan los pallets dañados dentro del remolque, antes de hablar de crédito en absoluto.</li>
+<li>Absorber en silencio el daño como un costo de hacer negocios este mes y revisar la relación con el proveedor en la renovación del contrato en su lugar.</li>
+</ol>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Cuál es la posición declarada de Teo, y qué interés la impulsa realmente?</li>
+<li>¿Qué cambiaría si tanto Teo como Priya trataran el detalle de la posición de carga como una pista diagnóstica compartida en lugar de munición para su propio lado?</li>
+<li>¿Qué estándar objetivo podría proponer Teo para que esto no se convierta en una llamada semanal?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Caso 2 — Dana y el intercambio de cobertura del fin de semana</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Caso 2 — Dana y el intercambio de cobertura del fin de semana</h2>
+<h3>Apertura</h3>
+<p>Dana dirige una línea de empaque en una planta; un par, Wes, dirige la línea contigua a la suya. Dana acaba de perder a un operador certificado de montacargas por una emergencia familiar y necesita cobertura para el sábado. Tiene una reunión de planta en veinte minutos donde se espera que reporte un plan resuelto.</p>
+<h3>Contexto</h3>
+<p>Dana abre con una posición: &quot;Necesito a dos de tus operadores certificados para el sábado, sin discusión.&quot; Wes responde de inmediato: &quot;No puedo prestar a nadie — mi propia línea ya está corta.&quot; Ambas posiciones caen en los primeros noventa segundos. Debajo del intercambio hay un rencor de seis meses: la última vez que Dana le pidió cobertura a Wes, no se cumplió y su línea perdió una fecha límite de envío, algo que ella todavía menciona cuando se frustra.</p>
+<p>La necesidad declarada de Dana — dos operadores certificados — es mayor que el vacío real: un solo turno abierto el sábado que específicamente requiere certificación de montacargas, no dos personas haciendo trabajo general. La negativa tajante de Wes está impulsada menos por una incapacidad real de liberar a alguien que por el miedo a que lo culpen otra vez si su propia línea queda corta; tiene un operador con capacitación cruzada que podría trabajar un turno parcial el sábado sin dejar su línea expuesta. Ninguno de los dos lo ha dicho en voz alta, porque el intercambio de noventa segundos de posiciones dejó fuera cualquier pregunta sobre lo que el otro realmente necesita.</p>
+<h3>Punto de decisión</h3>
+<p>Dana puede:</p>
+<ol>
+<li>Insistir en dos operadores y escalar al gerente de planta si Wes se niega.</li>
+<li>Preguntarle a Wes directamente qué cobertura necesita proteger su línea antes de pedirle que libere a alguien, y nombrar la fecha límite perdida como un asunto pasado y separado en lugar de dejar que impulse el número de hoy.</li>
+<li>Retirar la solicitud y cubrir el vacío con horas extra obligatorias en su propia línea, evitando por completo la conversación con Wes.</li>
+</ol>
+<h3>Preguntas de discusión</h3>
+<ol>
+<li>¿Cómo escondió el intercambio de posiciones fijas de noventa segundos el problema real y más pequeño?</li>
+<li>¿Qué papel jugó la fecha límite perdida en inflar las posiciones de apertura de ambos jefes de línea?</li>
+<li>¿Qué criterios objetivos — registros de certificación, un calendario de rotación, un nivel mínimo de personal documentado — podrían usar Dana y Wes para resolver disputas de cobertura antes de que lleguen al gerente de planta?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Marco — Mapa de intereses: de la posición al BATNA en una página</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Marco — Mapa de intereses: de la posición al BATNA en una página</h2>
+<p>Úsalo en el taller o imprímelo para el piso. Ejecuta un mapa por cada disputa activa de andén, proveedor o turno antes de tu próximo intercambio.</p>
+<h3>1. El punto muerto (una frase)</h3>
+<p>¿Qué número o requisito sostiene actualmente cada parte?</p>
+<h3>2. Verificación de posición</h3>
+<div class="table-wrap"><table>
+<tr><th>Parte</th><th>Posición declarada</th><th>¿Se dijo en voz alta?</th></tr>
+<tr><td>Yo</td><td></td><td></td></tr>
+<tr><td>El otro lado</td><td></td><td></td></tr>
+</table></div>
+<h3>3. Personas vs. problema</h3>
+<p>¿Qué fricción personal — tono, historia, ego — viaja junto con el asunto de fondo, y se puede nombrar por separado?</p>
+<h3>4. Excavación de intereses</h3>
+<div class="table-wrap"><table>
+<tr><th>Parte</th><th>Posición</th><th>Interés que realmente la impulsa</th></tr>
+<tr><td>Yo</td><td></td><td></td></tr>
+<tr><td>El otro lado</td><td></td><td></td></tr>
+</table></div>
+<h3>5. Generación de opciones</h3>
+<p>Enumera tres opciones que puedan satisfacer los intereses de ambas partes, no solo los tuyos:</p>
+<p>1.</p>
+<p>2.</p>
+<p>3.</p>
+<h3>6. Criterios objetivos</h3>
+<p>¿Qué estándar externo y verificable — cláusula del contrato, tarifa publicada, norma de seguridad, calendario de rotación — podría anclar el acuerdo en lugar de dividir la diferencia?</p>
+<h3>7. Verificación del BATNA</h3>
+<p>¿Qué pasa, específicamente, si esta negociación termina sin acuerdo? ¿Cuál es el costo real y el plazo de esa alternativa, y cambia lo que estás dispuesto a aceptar?</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-play 1:1 — Negociar el turno del fin de semana sin sacrificar la relación</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play 1:1 — Negociar el turno del fin de semana sin sacrificar la relación</h2>
+<p><strong>Duración:</strong> 25–35 minutos</p>
+<p><strong>Propósito:</strong> Practicar diagnosticar un punto muerto posicional sobre cobertura de turno y avanzar hacia los intereses de fondo antes de que una fecha límite fuerce una escalada.</p>
+<h3>Roles</h3>
+<p><strong>Rol 1 — Jefe de turno que solicita cobertura</strong></p>
+<p>Necesitas un operador certificado cubierto para el sábado después de perder personal por una emergencia, pero abres pidiendo dos operadores &quot;para estar seguro.&quot; No debes evitar nombrar el vacío real solo para evitar la fricción, y no debes dejar que un viejo rencor por una fecha límite perdida impulse el número de hoy.</p>
+<p><strong>Rol 2 — Jefe de turno al que se le pide</strong></p>
+<p>Tu propia línea ya está corta, y una vez te quemaste con una solicitud de cobertura que te dejó expuesto. Sostienes una negativa tajante hasta que te hagan una pregunta directa sobre lo que tu propia línea necesita proteger.</p>
+<h3>Conflicto</h3>
+<p>¿Pueden los dos jefes de turno pasar de un intercambio fijo de posiciones a un intercambio de cobertura que proteja ambas líneas, sin que la vieja fecha límite perdida vuelva a encenderse?</p>
+<h3>Notas del facilitador</h3>
+<ul>
+<li>Ronda 1 (8 min): Ambos jefes de turno declaran sus posiciones de apertura.</li>
+<li>Ronda 2 (8 min): El jefe que solicita nombra el turno abierto real y pregunta qué necesita proteger la otra línea antes de proponer un intercambio.</li>
+<li>Cierre (10 min): ¿Dónde estuvo cada jefe cerca de sostener su posición inflada demasiado tiempo? ¿Qué pregunta realmente movió la conversación hacia los intereses?</li>
+</ul></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Role-play estratégico — Resolver el punto muerto con el proveedor sin perder la sala</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-play estratégico — Resolver el punto muerto con el proveedor sin perder la sala</h2>
+<p><strong>Duración:</strong> 40–50 minutos</p>
+<p><strong>Propósito:</strong> Practicar cómo conseguir respaldo para una solución basada en intereses y anclada en criterios, para una disputa recurrente con un proveedor, frente a interesados que quieren cosas distintas del resultado.</p>
+<h3>Cuatro roles</h3>
+<ol>
+<li><strong>Supervisor (protagonista):</strong> Quiere aprobación para resolver una disputa recurrente de andén o proveedor nombrando los intereses de ambos lados y anclando la solución a un estándar objetivo, en lugar de seguir intercambiando exigencias fijas.</li>
+<li><strong>Representante de cuenta del proveedor (antagonista):</strong> Ha estado defendiendo una posición contractual fija y le preocupa que cualquier flexibilidad se lea internamente como una concesión regalada.</li>
+<li><strong>Analista de operaciones o finanzas (escéptico):</strong> Apoya resolver la disputa en principio pero quiere criterios nombrados y un BATNA de respaldo claro antes de aprobar.</li>
+<li><strong>Supervisor par (aliado u oscilante):</strong> Está afectado porque una disputa similar podría llegar a su propia línea después, y apoyará la solución solo si se convierte en un estándar que otras líneas también puedan usar, no una excepción de una sola vez.</li>
+</ol>
+<h3>Tesis del conflicto</h3>
+<p>¿Puede el supervisor mover un punto muerto posicional con el proveedor hacia una solución anclada en criterios objetivos y un BATNA real, sin parecer que cedió ventaja, sin ser vago con el analista, ni dejar expuesto al supervisor par?</p>
+<h3>Señales de éxito</h3>
+<ul>
+<li>La posición declarada del proveedor se separa del interés que realmente la impulsa</li>
+<li>Un criterio objetivo nombrado y verificable ancla el acuerdo</li>
+<li>Se declara un BATNA de respaldo específico si el proveedor no cumple su parte</li>
+<li>La solución se enmarca como un estándar reutilizable, no un trato especial para un solo andén</li>
+</ul>
+<h3>Preguntas de cierre</h3>
+<ol>
+<li>¿Cómo separó el supervisor la posición declarada del proveedor de su interés de fondo?</li>
+<li>¿Qué criterio objetivo realmente convenció al analista, y por qué?</li>
+<li>¿Qué habría hecho que el representante del proveedor se atrincherara en lugar de ceder?</li>
+<li>¿Cómo cambió el nombrar el BATNA el tono de la reunión?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Puntos clave — Cambiar posiciones por intereses antes de atrincherarte</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Puntos clave — Cambiar posiciones por intereses antes de atrincherarte</h2>
+<p><strong>Meta de la unidad:</strong> Diagnosticar a tiempo la negociación posicional en disputas de turno, andén y proveedores, separar a las personas del problema, y llevar una negociación estancada a través de intereses, opciones y criterios objetivos hacia un acuerdo respaldado por un BATNA real.</p>
+<h3>Ideas centrales</h3>
+<ul>
+<li><strong>Las posiciones son sustitutos, no la petición real:</strong> un número declarado suele proteger una necesidad que ninguna de las partes ha nombrado todavía (Pruitt, 1981).</li>
+<li><strong>Las disputas de piso tienden por defecto a lo distributivo:</strong> tratan un problema compartido como un pastel fijo para repartir, cuando a menudo es un problema conjunto para resolver (Walton &amp; McKersie, 1965).</li>
+<li><strong>Las personas y el problema se enredan rápido:</strong> el tono, la historia y el ego viajan junto con el asunto de fondo a menos que se separen deliberadamente (Follett, 1940).</li>
+<li><strong>Los criterios objetivos resuelven más rápido que dividir la diferencia:</strong> una tarifa publicada, una cláusula del contrato o una norma de seguridad resuelve disputas con menos resentimiento residual (Raiffa, 1982).</li>
+<li><strong>Tu BATNA cambia cuánto sostienes una posición:</strong> una alternativa real y verificada afloja el aferramiento a un número que estaba sustituyendo un plan (Sebenius, 1992).</li>
+</ul>
+<h3>Lista de verificación para líderes de primera línea</h3>
+<ol>
+<li>Notar cuándo un desacuerdo se ha endurecido en dos números fijos antes de que alguna de las partes se mueva.</li>
+<li>Nombrar cualquier fricción interpersonal — tono, historia, ego — por separado del asunto de fondo.</li>
+<li>Preguntar qué interés impulsa la posición del otro lado antes de repetir la propia.</li>
+<li>Generar al menos dos opciones que puedan satisfacer los intereses de ambas partes.</li>
+<li>Anclar cualquier acuerdo a un estándar objetivo, no a una división 50/50.</li>
+<li>Conocer tu BATNA real antes de que empiece la conversación.</li>
+</ol>
+<h3>Reflexión</h3>
+<p>¿Qué negociación de piso recurrente manejas actualmente repitiendo tu posición más fuerte, y qué cambiaría si preguntaras primero por el interés del otro lado?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Compromiso — Proteger la verificación de intereses antes del próximo punto muerto</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Próximamente</p><p>Tu plan de compromiso se abrirá en <strong>Google Forms</strong> para que puedas enviarlo y guardar un registro — no como campos rellenables en esta página.</p><p class="gate-note">Nada que completar aquí hasta que el enlace del formulario esté listo.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Negociación táctica y empresarial · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>

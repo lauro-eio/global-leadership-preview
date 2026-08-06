@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tactical Negotiation — Tactical &amp; Enterprise Negotiation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #14221c; --ink-soft: #2a3d34; --paper: #f3efe6; --paper-2: #e8e2d4;
+      --line: #c9c0ae; --accent: #0f6e56; --accent-deep: #0a4f3d; --warm: #c45c26;
+      --white: #fbfaf6; --shadow: 0 18px 40px rgba(20, 34, 28, 0.08); --wide: 68rem; --max: 44rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Outfit", system-ui, sans-serif; line-height: 1.65;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,.12), transparent 55%),
+        linear-gradient(180deg, #f7f3ea 0%, var(--paper) 40%, #efe9db 100%);
+    }
+    .hero {
+      min-height: min(70vh, 560px); display: grid; align-items: end; color: var(--white);
+      padding: 1.25rem clamp(1.25rem,4vw,3rem) 2.5rem;
+      background: linear-gradient(165deg, rgba(10,40,32,.92), rgba(15,70,54,.88) 45%, rgba(20,34,28,.94));
+    }
+    .brand { font-family: "Fraunces", Georgia, serif; font-size: clamp(2rem,6vw,3.5rem); font-weight: 700; margin: 0 0 .35rem; }
+    .program-title {
+      margin: 0 0 1rem; font-size: clamp(1.05rem,2.4vw,1.35rem); font-weight: 500;
+      color: rgba(251,250,246,.9); max-width: 36rem;
+    }
+    .hero h1 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,3.2vw,2rem); font-weight: 500; max-width: 22ch; margin: 0 0 1rem; }
+    .hero-lead { max-width: 40rem; color: rgba(251,250,246,.88); }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: 1.25rem; color: rgba(251,250,246,.7); font-size: .95rem; }
+    .toc { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(243,239,230,.9); border-bottom: 1px solid var(--line); }
+    .toc-inner { max-width: var(--wide); margin: 0 auto; padding: .65rem clamp(1.25rem,4vw,3rem); display: flex; gap: .35rem 1rem; overflow-x: auto; }
+    .toc a { flex: 0 0 auto; text-decoration: none; color: var(--ink-soft); font-size: .82rem; font-weight: 500; }
+    main { max-width: var(--wide); margin: 0 auto; padding: 1.5rem clamp(1.25rem,4vw,3rem) 4rem; }
+    section { padding: .5rem 0; border-bottom: 1px solid var(--line); }
+    .section-label { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin: 0 0 .35rem; }
+    h2 { font-family: "Fraunces", Georgia, serif; font-size: clamp(1.35rem,2.8vw,1.85rem); margin: 0; letter-spacing: -.02em; }
+    .fold > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: .35rem 1rem; padding: 1.25rem 0; }
+    .fold > summary::-webkit-details-marker { display: none; }
+    .fold-chevron { width: 2.1rem; height: 2.1rem; border-radius: 999px; border: 1px solid var(--line); background: var(--white); display: inline-flex; align-items: center; justify-content: center; }
+    .fold-chevron::before { content: ""; width: .4rem; height: .4rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg) translate(-1px,-1px); }
+    .fold[open] > summary .fold-chevron { transform: rotate(180deg); background: var(--ink); border-color: var(--ink); }
+    .fold[open] > summary .fold-chevron::before { border-color: var(--white); }
+    .fold-body { padding: 0 0 1.75rem; max-width: var(--max); }
+    .prose p { margin: 0 0 1rem; }
+    .prose ul, .prose ol { margin: 0 0 1rem; padding-left: 1.2rem; }
+    .prose h2:first-child { display: none; }
+    .article-signature {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+    }
+    .gate-panel {
+      padding: 1.25rem 1.35rem;
+      border: 1px dashed var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 4px;
+    }
+    .gate-kicker {
+      margin: 0 0 .5rem;
+      font-size: .78rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--warm);
+      font-weight: 600;
+    }
+    .gate-note { color: var(--ink-soft); font-size: .95rem; margin-bottom: 0 !important; }
+    .form-cta {
+      display: inline-block;
+      margin-top: .25rem;
+      padding: .65rem 1.1rem;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+    }
+    .form-cta:hover { background: var(--accent-deep); }
+    .table-wrap { overflow-x: auto; margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+    th, td { padding: .7rem .9rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { background: var(--paper-2); }
+    footer { max-width: var(--wide); margin: 0 auto; padding: 1rem clamp(1.25rem,4vw,3rem) 3rem; color: var(--ink-soft); font-size: .88rem; }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="brand">Global Leadership</p>
+      <p class="program-title">Tactical &amp; Enterprise Negotiation</p>
+      <h1>Tactical Negotiation</h1>
+      <p class="hero-lead">Help frontline leaders diagnose positional bargaining on shift, dock, and vendor disputes early, separate people from the problem, and move a stuck negotiation through interests, options, and objective criteria toward an agreement backed by a real BATNA.</p>
+      <div class="hero-meta">
+        <span>GTY · U01</span>
+      </div>
+    </div>
+  </header>
+  <nav class="toc" aria-label="Sections"><div class="toc-inner"><a href="#research">Positions Cost More Than They Save: What the Evi</a>
+<a href="#opinion">The Detention Fee I Almost Refused to Discuss</a>
+<a href="#assessment">Self-Assessment — Are You Bargaining Positions o</a>
+<a href="#case-1">Case 1 — Teo and the Return-Window Standoff</a>
+<a href="#case-2">Case 2 — Dana and the Weekend Coverage Trade</a>
+<a href="#framework">Framework — Interest Map: From Position to BATNA</a>
+<a href="#roleplay-1v1">Role-Play 1v1 — Trading the Weekend Slot Without</a>
+<a href="#roleplay-strategic">Strategic Role-Play — Fixing the Vendor Standoff</a>
+<a href="#key-notes">Key Notes — Trading Positions for Interests Befo</a>
+<a href="#commitment">Commitment — Protecting the Interest Check Befor</a></div></nav>
+  <main id="contenido">
+    
+    <section id="research">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Research</p>
+            <h2>Positions Cost More Than They Save: What the Evidence Says About Floor Negotiation Breakdowns</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Positions Cost More Than They Save: What the Evidence Says About Floor Negotiation Breakdowns</h2>
+<p>Frontline leaders negotiate constantly, even when nobody calls it that. A shift lead trading headcount with a peer, a dock supervisor pushing back on a vendor&#x27;s detention invoice, a line manager defending a maintenance window against a scheduler — each is a negotiation, and each can collapse into positional bargaining without anyone naming it.</p>
+<h3>Two fixed numbers facing off</h3>
+<p>Positional bargaining shows up on the floor as two stated numbers facing off: &quot;We&#x27;re not paying the fee&quot; against &quot;The contract says you owe it.&quot; &quot;I need my four people back&quot; against &quot;I can&#x27;t release anyone before Sunday.&quot; Once both sides plant a position, the conversation stops being about the underlying problem and starts being about who backs down first. Early behavioral research on labor bargaining distinguished between distributive tactics, where each side tries to claim a larger share of a fixed pie, and integrative tactics, where parties jointly expand what is available before dividing it (Walton &amp; McKersie, 1965). Positional bargaining on a shift floor defaults to distributive: it treats a shared problem — a late truck, a short crew, a defect crossing two lines — as a fixed pie to split rather than a joint problem to solve.</p>
+<h3>Separating the people from the problem</h3>
+<p>A disagreement often escalates not because the substantive issue is unsolvable, but because the people involved get tangled up in it. Mary Parker Follett&#x27;s writing on constructive conflict framed disagreement as a resource rather than a failure, provided parties separate personal friction — tone, history, ego — from the actual problem on the table (Follett, 1940). A dock supervisor who feels disrespected by a vendor&#x27;s tone is negotiating two things at once: the invoice and the disrespect. Collapsing them into one fight usually means neither gets resolved.</p>
+<h3>Interests hiding behind positions</h3>
+<p>Once people and problem are pulled apart, the next question is what each side actually needs, not what each side is currently saying. Pruitt&#x27;s research on negotiation behavior found that negotiators who generate multiple options tied to underlying needs — rather than defending a single number — reach agreements both sides rate as fairer and more durable (Pruitt, 1981). On the floor, this means asking why a vendor is fighting a return window, not just whether they will agree to it; asking why a peer won&#x27;t release a certified operator, not just whether they will.</p>
+<h3>Anchoring to something outside the argument</h3>
+<p>Raiffa&#x27;s work on negotiation analysis adds a structural piece: parties who anchor a settlement to an external, verifiable standard — a posted lead time, a rate card, a documented safety rule — settle faster and with less residual resentment than parties who simply split the difference between two demands (Raiffa, 1982). A dock dispute anchored to what the contract&#x27;s stated receiving window actually says moves differently than one anchored to who repeats their number more forcefully.</p>
+<h3>Why your BATNA changes how you argue</h3>
+<p>The final piece is knowing what happens if no agreement is reached. The comparison-level-of-alternatives concept, later formalized within broader negotiation analysis, shows that willingness to hold a position is driven less by the position itself than by the quality of the walk-away option behind it (Kelley &amp; Thibaut, 1978; Sebenius, 1992). A supervisor who has not worked out a real alternative to a vendor or a peer will grip a position too tightly, because the position is standing in for a plan they never built.</p>
+<h3>What this means for frontline leaders</h3>
+<p>The diagnostic sequence is consistent across this literature: notice when a floor dispute has calcified into two fixed positions, separate interpersonal friction from the substantive problem, surface the interests behind each position, generate more than one option that could satisfy them, anchor any settlement to an objective standard, and know your walk-away alternative before the conversation starts. None of these steps require a boardroom. They apply as directly to a dock office and a shift-change radio call as to any negotiation this research was built to describe.</p>
+<h3>Selected references</h3>
+<ul>
+<li>Follett, M. P. (1940). Constructive conflict. In H. C. Metcalf &amp; L. Urwick (Eds.), <em>Dynamic Administration: The Collected Papers of Mary Parker Follett</em>. Harper &amp; Brothers.</li>
+<li>Kelley, H. H., &amp; Thibaut, J. W. (1978). <em>Interpersonal Relations: A Theory of Interdependence</em>. Wiley.</li>
+<li>Pruitt, D. G. (1981). <em>Negotiation Behavior</em>. Academic Press.</li>
+<li>Raiffa, H. (1982). <em>The Art and Science of Negotiation</em>. Harvard University Press.</li>
+<li>Sebenius, J. K. (1992). Negotiation analysis: A characterization and review. <em>Management Science, 38</em>(1), 18–38.</li>
+<li>Walton, R. E., &amp; McKersie, R. B. (1965). <em>A Behavioral Theory of Labor Negotiations</em>. McGraw-Hill.</li>
+</ul>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="opinion">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Opinion</p>
+            <h2>The Detention Fee I Almost Refused to Discuss</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>The Detention Fee I Almost Refused to Discuss</h2>
+<p>I told a vendor dispatcher, flatly, that we were not paying a four-hundred-dollar detention charge for a truck that sat at our dock two extra hours. That was my whole position. I had decided it before he finished explaining why the charge showed up on the invoice.</p>
+<p>He pushed back just as flatly: the contract covers detention past a thirty-minute grace window, and our dock crew took the truck ninety minutes past that. Two positions, two ultimatums, no movement. We spent fifteen minutes restating the same two numbers, and I could feel the call sliding toward &quot;put it in writing and let the account managers fight it out&quot; — which usually means the relationship takes the hit long before the invoice gets resolved.</p>
+<p>What stopped me was a question from my own dock lead, standing next to me: &quot;Why did the truck actually sit for two hours?&quot; I didn&#x27;t have a good answer. I checked the receiving log while the dispatcher waited on the line, and it turned out our overnight crew had been short two people, and the truck had been queued behind three others with no change to the schedule. That wasn&#x27;t his problem to eat, and it wasn&#x27;t entirely ours either — it was a scheduling gap neither of us had named out loud.</p>
+<p>So I stopped defending the number and asked a different question: what would actually prevent this next month, from his side. It turned out his real interest wasn&#x27;t the four hundred dollars — his dispatch team is measured on on-time turnarounds, and a truck sitting at our dock for two hours drags down a number that follows his driver to the next stop. My real interest wasn&#x27;t the money either — it was not having a truck blocking our only receiving bay during a short-staffed shift.</p>
+<p>We didn&#x27;t split the fee. We agreed to something neither of us had on the table when the call started: a fixed appointment window for his trucks on our short-staffed days, and in exchange, we&#x27;d eat the detention this one time as the cost of not having flagged the staffing gap earlier. I checked that against what I actually knew our alternative was — switching carriers on short notice would have cost more in expedited freight than the fee itself — so I wasn&#x27;t giving up leverage I didn&#x27;t have.</p>
+<p>I used to think holding the line on a number was the same thing as protecting my dock&#x27;s interests. It isn&#x27;t. The number was never the actual problem. The problem was a staffing gap and a metric I didn&#x27;t know he was carrying. Now, before I restate a position twice, I ask what&#x27;s actually driving the other side&#x27;s number, and I make myself answer what&#x27;s driving mine. That costs about five minutes. Digging in for an hour and losing the relationship anyway costs a lot more.</p>
+<p class="article-signature">Curated by {E}</p></div>
+      </details>
+    </section>
+    
+    <section id="assessment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Pre-work · Diagnostic</p>
+            <h2>Self-Assessment — Are You Bargaining Positions or Solving the Real Problem?</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>This diagnostic will open in <strong>Google Forms</strong> so answers stay private and you get your profile after submit — not inside this page.</p><p class="gate-note">Questions and scoring stay in the form. Nothing to fill here yet.</p></div></div>
+      </details>
+    </section>
+    
+    <section id="case-1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 1</p>
+            <h2>Case 1 — Teo and the Return-Window Standoff</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 1 — Teo and the Return-Window Standoff</h2>
+<h3>Opening</h3>
+<p>Teo runs receiving at a regional distribution dock. He has flagged damaged pallets from the same vendor three times this month, and each time the return-and-credit process has delayed restocking by several days. He knows he tends to open hard when he thinks a vendor is cutting corners.</p>
+<h3>Context</h3>
+<p>On this week&#x27;s call, Teo opens with a flat position: reject the shipment, full credit, no discussion. The vendor&#x27;s account rep, Priya, counters just as flatly — their packaging meets the agreed spec, and any damage happened on the dock side after drop-off. Both restate their number across two calls with no movement. The next delivery is two days out, and Teo&#x27;s warehouse manager wants a resolution before then, not another open dispute.</p>
+<p>Neither side has asked the other a real question. Teo assumes Priya&#x27;s company ships cheap packaging to cut cost. Priya assumes Teo&#x27;s crew is rough-handling pallets and using damage claims to negotiate discounts. A newer member of Teo&#x27;s crew mentions, almost in passing, that the damage seems to concentrate on pallets loaded in one specific position inside the trailer — a detail nobody has asked about because nobody has moved past defending their position.</p>
+<h3>Decision point</h3>
+<p>Teo can:</p>
+<ol>
+<li>Hold his position, reject the shipment again, and let the account teams fight it out through the formal claims process.</li>
+<li>Propose a fifteen-minute call with Priya focused only on where in the trailer the damaged pallets are loaded, before discussing credit at all.</li>
+<li>Quietly absorb the damage as a cost of doing business this month and revisit the vendor relationship at contract renewal instead.</li>
+</ol>
+<h3>Discussion questions</h3>
+<ol>
+<li>What is Teo&#x27;s stated position, and what interest is actually driving it?</li>
+<li>What would change if both Teo and Priya treated the loading-position detail as a shared diagnostic clue instead of ammunition for their own side?</li>
+<li>What objective standard could Teo propose so this doesn&#x27;t become a weekly call?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="case-2">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Case 2</p>
+            <h2>Case 2 — Dana and the Weekend Coverage Trade</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Case 2 — Dana and the Weekend Coverage Trade</h2>
+<h3>Opening</h3>
+<p>Dana leads one packaging line at a plant; a peer, Wes, leads the line next to hers. Dana just lost a certified forklift operator to a family emergency and needs coverage for Saturday. She has a plant meeting in twenty minutes where she is expected to report a resolved plan.</p>
+<h3>Context</h3>
+<p>Dana opens with a position: &quot;I need two of your certified operators for Saturday, full stop.&quot; Wes counters immediately: &quot;I can&#x27;t spare anyone — my own line is already short.&quot; Both positions land within the first ninety seconds. Underneath the exchange sits a six-month-old grudge: the last time Dana asked Wes for coverage, it fell through and her line missed a shipment deadline, which she still brings up when frustrated.</p>
+<p>Dana&#x27;s stated need — two certified operators — is bigger than the actual gap: one open Saturday slot that specifically requires forklift certification, not two people doing general labor. Wes&#x27;s flat refusal is driven less by an actual inability to release anyone than by fear of being blamed again if his own line falls short; he has one cross-trained operator who could work a partial Saturday shift without leaving his line exposed. Neither has said this out loud, because the ninety-second exchange of positions crowded out any question about what the other actually needs.</p>
+<h3>Decision point</h3>
+<p>Dana can:</p>
+<ol>
+<li>Insist on two operators and escalate to the plant manager if Wes refuses.</li>
+<li>Ask Wes directly what coverage his line needs to protect before asking him to release anyone, and name the old missed deadline as a separate, past issue rather than let it drive today&#x27;s number.</li>
+<li>Withdraw the request and cover the gap with mandatory overtime on her own line, avoiding the conversation with Wes entirely.</li>
+</ol>
+<h3>Discussion questions</h3>
+<ol>
+<li>How did the ninety-second exchange of fixed positions hide the actual, smaller problem?</li>
+<li>What role did the old missed deadline play in inflating both leads&#x27; opening positions?</li>
+<li>What objective criteria — certification records, a rotation schedule, a documented minimum staffing level — could Dana and Wes use to settle coverage disputes before they reach the plant manager?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="framework">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Framework</p>
+            <h2>Framework — Interest Map: From Position to BATNA in One Page</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Framework — Interest Map: From Position to BATNA in One Page</h2>
+<p>Use in workshop or print for the floor. Run one map per live dock, vendor, or shift dispute before your next exchange.</p>
+<h3>1. The standoff (one sentence)</h3>
+<p>What number or requirement is each side currently holding?</p>
+<h3>2. Position check</h3>
+<div class="table-wrap"><table>
+<tr><th>Side</th><th>Stated position</th><th>Said out loud yet?</th></tr>
+<tr><td>Me</td><td></td><td></td></tr>
+<tr><td>Other side</td><td></td><td></td></tr>
+</table></div>
+<h3>3. People vs. problem</h3>
+<p>What personal friction — tone, history, ego — is riding along with the substantive issue, and can it be named separately?</p>
+<h3>4. Interest dig</h3>
+<div class="table-wrap"><table>
+<tr><th>Side</th><th>Position</th><th>Interest actually driving it</th></tr>
+<tr><td>Me</td><td></td><td></td></tr>
+<tr><td>Other side</td><td></td><td></td></tr>
+</table></div>
+<h3>5. Option generation</h3>
+<p>List three options that could satisfy both sides&#x27; interests, not just your own:</p>
+<p>1.</p>
+<p>2.</p>
+<p>3.</p>
+<h3>6. Objective criteria</h3>
+<p>What external, checkable standard — contract term, posted rate, safety rule, rotation schedule — could anchor the settlement instead of splitting the difference?</p>
+<h3>7. BATNA check</h3>
+<p>What happens, specifically, if this negotiation ends without agreement? What is the real cost and timeline of that alternative, and does it change what you&#x27;re willing to accept?</p></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-1v1">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Role-play</p>
+            <h2>Role-Play 1v1 — Trading the Weekend Slot Without Trading Away the Relationship</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Role-Play 1v1 — Trading the Weekend Slot Without Trading Away the Relationship</h2>
+<p><strong>Duration:</strong> 25–35 minutes</p>
+<p><strong>Purpose:</strong> Practice diagnosing a positional standoff over shift coverage and moving to underlying interests before a deadline forces an escalation.</p>
+<h3>Roles</h3>
+<p><strong>Role 1 — Shift lead requesting coverage</strong></p>
+<p>You need one certified operator covered for Saturday after losing staff to an emergency, but you open by asking for two operators &quot;to be safe.&quot; You must not skip naming the actual gap just to avoid friction, and you must not let an old missed-deadline grudge drive today&#x27;s number.</p>
+<p><strong>Role 2 — Shift lead being asked</strong></p>
+<p>Your own line is already short, and you were burned once before by a coverage request that left you exposed. You hold a flat refusal until asked a direct question about what your own line needs to protect.</p>
+<h3>Conflict</h3>
+<p>Can the two leads move from a fixed exchange of positions to a coverage trade that protects both lines, without the old missed deadline reigniting?</p>
+<h3>Facilitator notes</h3>
+<ul>
+<li>Round 1 (8 min): Both leads state their opening positions.</li>
+<li>Round 2 (8 min): The requesting lead names the actual open slot and asks what the other line needs to protect before proposing a trade.</li>
+<li>Debrief (10 min): Where did each lead nearly hold their inflated position too long? What question actually moved the conversation to interests?</li>
+</ul></div>
+      </details>
+    </section>
+    
+    <section id="roleplay-strategic">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Live · Strategic role-play</p>
+            <h2>Strategic Role-Play — Fixing the Vendor Standoff Without Losing the Room</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Strategic Role-Play — Fixing the Vendor Standoff Without Losing the Room</h2>
+<p><strong>Duration:</strong> 40–50 minutes</p>
+<p><strong>Purpose:</strong> Practice securing buy-in for an interest-based, criteria-anchored fix to a recurring vendor dispute in front of stakeholders who each want something different from the outcome.</p>
+<h3>Four roles</h3>
+<ol>
+<li><strong>Supervisor (protagonist):</strong> Wants approval to resolve a recurring dock or vendor dispute by naming the interests on both sides and anchoring the fix to an objective standard, instead of continuing to trade fixed demands.</li>
+<li><strong>Vendor account representative (antagonist):</strong> Has been defending a fixed contractual position and is wary that any flexibility will be read internally as a giveaway.</li>
+<li><strong>Operations or finance analyst (skeptic):</strong> Supports resolving the dispute in principle but wants named criteria and a clear BATNA fallback before signing off.</li>
+<li><strong>Peer supervisor (ally or swing):</strong> Is affected because a similar dispute could hit their own line next, and will support the fix only if it becomes a standard other lines can also use, not a one-off exception.</li>
+</ol>
+<h3>Conflict thesis</h3>
+<p>Can the supervisor move a positional vendor standoff toward a fix anchored in objective criteria and a real BATNA, without looking like they gave away leverage, being vague to the analyst, or leaving the peer supervisor exposed?</p>
+<h3>Success look-fors</h3>
+<ul>
+<li>The vendor&#x27;s stated position is separated from the interest actually driving it</li>
+<li>A named, checkable objective criterion anchors the settlement</li>
+<li>A specific BATNA fallback is stated if the vendor doesn&#x27;t hold up their end</li>
+<li>The fix is framed as a reusable standard, not a special deal for one dock</li>
+</ul>
+<h3>Debrief prompts</h3>
+<ol>
+<li>How did the supervisor separate the vendor&#x27;s stated position from their underlying interest?</li>
+<li>What objective criterion actually moved the analyst, and why?</li>
+<li>What would have caused the vendor rep to dig in instead of conceding?</li>
+<li>How did naming the BATNA change the tone of the meeting?</li>
+</ol></div>
+      </details>
+    </section>
+    
+    <section id="key-notes">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Take-away · Key notes</p>
+            <h2>Key Notes — Trading Positions for Interests Before You Dig In</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><h2>Key Notes — Trading Positions for Interests Before You Dig In</h2>
+<p><strong>Unit goal:</strong> Diagnose positional bargaining on shift, dock, and vendor disputes early, separate people from the problem, and move a stuck negotiation through interests, options, and objective criteria toward an agreement backed by a real BATNA.</p>
+<h3>Core ideas</h3>
+<ul>
+<li><strong>Positions are stand-ins, not the real ask:</strong> a stated number usually protects a need neither side has named yet (Pruitt, 1981).</li>
+<li><strong>Floor disputes default to distributive:</strong> they treat a shared problem as a fixed pie to split, when it is often a joint problem to solve (Walton &amp; McKersie, 1965).</li>
+<li><strong>People and problem tangle fast:</strong> tone, history, and ego ride along with the substantive issue unless deliberately separated (Follett, 1940).</li>
+<li><strong>Objective criteria settle faster than splitting the difference:</strong> a posted rate, a contract term, or a safety rule resolves disputes with less residual resentment (Raiffa, 1982).</li>
+<li><strong>Your BATNA changes how hard you hold a position:</strong> a real, checked alternative loosens the grip on a number that was standing in for a plan (Sebenius, 1992).</li>
+</ul>
+<h3>Frontline leader checklist</h3>
+<ol>
+<li>Notice when a disagreement has calcified into two fixed numbers before either side moves.</li>
+<li>Name any interpersonal friction — tone, history, ego — separately from the substantive issue.</li>
+<li>Ask what interest is driving the other side&#x27;s position before restating your own.</li>
+<li>Generate at least two options that could satisfy both sides&#x27; interests.</li>
+<li>Anchor any settlement to an objective standard, not a 50/50 split.</li>
+<li>Know your actual BATNA before the conversation starts.</li>
+</ol>
+<h3>Reflection</h3>
+<p>Which recurring floor negotiation do you currently handle by restating your position louder, and what would change if you asked about the other side&#x27;s interest first?</p></div>
+      </details>
+    </section>
+    
+    <section id="commitment">
+      <details class="fold">
+        <summary>
+          <div class="fold-heading">
+            <p class="section-label">Close · Commitment</p>
+            <h2>Commitment — Protecting the Interest Check Before the Next Standoff</h2>
+          </div>
+          <span class="fold-chevron" aria-hidden="true"></span>
+        </summary>
+        <div class="fold-body prose"><div class="gate-panel"><p class="gate-kicker">Coming soon</p><p>Your commitment plan will open in <strong>Google Forms</strong> so you can submit and keep a record — not as fillable fields on this page.</p><p class="gate-note">Nothing to complete here until the form link is ready.</p></div></div>
+      </details>
+    </section>
+    
+  </main>
+  <footer>
+    <p>Tactical &amp; Enterprise Negotiation · Global Leadership · {E}</p>
+  </footer>
+  <script>
+    (function () {
+      function openFoldTarget(id) {
+        if (!id) return;
+        var el = document.getElementById(id);
+        if (!el) return;
+        var node = el;
+        while (node && node !== document.body) {
+          if (node.tagName === "DETAILS") node.open = true;
+          node = node.parentElement;
+        }
+        if (el.tagName !== "DETAILS") {
+          var child = el.querySelector(":scope > details.fold");
+          if (child) child.open = true;
+        }
+      }
+      function syncHash() { openFoldTarget((location.hash || "").slice(1)); }
+      window.addEventListener("hashchange", syncHash);
+      syncHash();
+    })();
+  </script>
+</body>
+</html>
